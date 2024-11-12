@@ -52,17 +52,17 @@ download_wsdls:
 	@sed -i -e "5036,5051 s/.*//" $(WSDLS)/ResolutionCaseManagementService.wsdl
 	@sed -i -e "5067,5083 s/.*//" $(WSDLS)/ResolutionCaseManagementService.wsdl
 	@sed -i -e "s/<\/xs:schema>/<xs:complexType name=\"appealRef\"><xs:attribute name=\"idref\" type=\"xs:string\"\/><\/xs:complexType><xs:complexType name=\"moneyMovementRef\"><xs:attribute name=\"idref\" type=\"xs:string\"\/><\/xs:complexType><\/xs:schema>/" $(WSDLS)/ResolutionCaseManagementService.wsdl
-	@echo "BulkDataExchange           : `sed -rn 's/.*<version>(.*)<\/version>/\1/p' $(WSDLS)/BulkDataExchangeService.wsdl`"
+# 	@echo "BulkDataExchange           : `sed -rn 's/.*<version>(.*)<\/version>/\1/p' $(WSDLS)/BulkDataExchangeService.wsdl`"
 	@echo "BusinessPoliciesManagement : `sed -rn 's/.*<version>(.*)<\/version>/\1/p' $(WSDLS)/SellerProfilesManagementService.wsdl`"
 	@echo "Feedback                   : `sed -rn 's/.*<Version>(.*)<\/Version>/\1/p' $(WSDLS)/FeedbackService.wsdl`"
-	@echo "FileTransfer               : `sed -rn 's/.*<Version>(.*)<\/Version>/\1/p' $(WSDLS)/FileTransferService.wsdl`"
+# 	@echo "FileTransfer               : `sed -rn 's/.*<Version>(.*)<\/Version>/\1/p' $(WSDLS)/FileTransferService.wsdl`"
 	@echo "Finding                    : `sed -rn 's/.*<Version>(.*)<\/Version>/\1/p' $(WSDLS)/FindingService.wsdl`"
 	@echo "HalfFinding                : `sed -rn 's/.*<Version>(.*)<\/Version>/\1/p' $(WSDLS)/HalfFindingService.wsdl`"
 	@echo "Merchandising              : `sed -rn 's/.*<Version>(.*)<\/Version>/\1/p' $(WSDLS)/MerchandisingService.wsdl`"
-	@echo "MerchantData               : `sed -rn 's/<!-- Version ([[:digit:]]{3}).*/\1/p' $(WSDLS)/merchantdataservice.xsd`"
+# 	@echo "MerchantData               : `sed -rn 's/<!-- Version ([[:digit:]]{3}).*/\1/p' $(WSDLS)/merchantdataservice.xsd`"
 	@echo "Product                    : `sed -rn 's/.*<Version>(.*)<\/Version>/\1/p' $(WSDLS)/ProductService.wsdl`"
 	@echo "ProductMetadata            : `sed -rn 's/.*<Version>(.*)<\/Version>/\1/p' $(WSDLS)/ProductMetadataService.wsdl`"
-	@echo "Related Items Management   : `sed -rn 's/.*<Version>(.*)<\/Version>/\1/p' $(WSDLS)/BundleManagementService.wsdl`"
+# 	@echo "Related Items Management   : `sed -rn 's/.*<Version>(.*)<\/Version>/\1/p' $(WSDLS)/BundleManagementService.wsdl`"
 	@echo "Resolution Case Management : `sed -rn 's/.*<version>(.*)<\/version>/\1/p' $(WSDLS)/ResolutionCaseManagementService.wsdl`"
 	@echo "Return Management          : `sed -rn 's/.*<version>(.*)<\/version>/\1/p' $(WSDLS)/ReturnManagementService.wsdl`"
 	@echo "Shopping                   : `sed -rn 's/.*<Version>(.*)<\/Version>/\1/p' $(WSDLS)/ShoppingService.wsdl`"
@@ -85,12 +85,12 @@ transform:
 		-xsl:$(XSL)/restSdk.xsl						\
 		service=Analytics						\
 		destDirectory=$(TRANSFORMED)/Analytics/
-	@saxonb-xslt								\
-		-ext:on								\
-		-s:$(WSDLS)/BulkDataExchangeService.wsdl			\
-		-xsl:$(XSL)/sdk.xsl						\
-		service=BulkDataExchange					\
-		destDirectory=$(TRANSFORMED)/BulkDataExchange/
+# 	@saxonb-xslt								\
+# 		-ext:on								\
+# 		-s:$(WSDLS)/BulkDataExchangeService.wsdl			\
+# 		-xsl:$(XSL)/sdk.xsl						\
+# 		service=BulkDataExchange					\
+# 		destDirectory=$(TRANSFORMED)/BulkDataExchange/
 	@saxonb-xslt								\
 		-ext:on								\
 		-s:$(WSDLS)/Browse.wsdl						\
@@ -121,18 +121,18 @@ transform:
 		-xsl:$(XSL)/restSdk.xsl						\
 		service=Feed    						\
 		destDirectory=$(TRANSFORMED)/Feed/
-	@saxonb-xslt								\
-		-ext:on								\
-		-s:$(WSDLS)/FeedbackService.wsdl				\
-		-xsl:$(XSL)/sdk.xsl	 					\
-		service=Feedback						\
-		destDirectory=$(TRANSFORMED)/Feedback/
-	@saxonb-xslt								\
-		-ext:on								\
-		-s:$(WSDLS)/FileTransferService.wsdl				\
-		-xsl:$(XSL)/sdk.xsl						\
-		service=FileTransfer						\
-		destDirectory=$(TRANSFORMED)/FileTransfer/
+# 	@saxonb-xslt								\
+# 		-ext:on								\
+# 		-s:$(WSDLS)/FeedbackService.wsdl				\
+# 		-xsl:$(XSL)/sdk.xsl	 					\
+# 		service=Feedback						\
+# 		destDirectory=$(TRANSFORMED)/Feedback/
+# 	@saxonb-xslt								\
+# 		-ext:on								\
+# 		-s:$(WSDLS)/FileTransferService.wsdl				\
+# 		-xsl:$(XSL)/sdk.xsl						\
+# 		service=FileTransfer						\
+# 		destDirectory=$(TRANSFORMED)/FileTransfer/
 	@saxonb-xslt								\
 		-ext:on								\
 		-s:$(WSDLS)/FindingService.wsdl					\
@@ -169,12 +169,12 @@ transform:
 		-xsl:$(XSL)/sdk.xsl						\
 		service=Merchandising    					\
 		destDirectory=$(TRANSFORMED)/Merchandising/
-	@saxonb-xslt								\
-		-ext:on								\
-		-s:$(WSDLS)/merchantdataservice.xsd				\
-		-xsl:$(XSL)/sdk.xsl						\
-		service=MerchantData						\
-		destDirectory=$(TRANSFORMED)/MerchantData/
+# 	@saxonb-xslt								\
+# 		-ext:on								\
+# 		-s:$(WSDLS)/merchantdataservice.xsd				\
+# 		-xsl:$(XSL)/sdk.xsl						\
+# 		service=MerchantData						\
+# 		destDirectory=$(TRANSFORMED)/MerchantData/
 	@saxonb-xslt								\
 		-ext:on								\
 		-s:$(WSDLS)/Metadata.wsdl					\
@@ -211,18 +211,18 @@ transform:
 		-xsl:$(XSL)/sdk.xsl						\
 		service=ProductMetadata    					\
 		destDirectory=$(TRANSFORMED)/ProductMetadata/
-	@saxonb-xslt								\
-		-ext:on								\
-		-s:$(WSDLS)/BundleManagementService.wsdl			\
-		-xsl:$(XSL)/sdk.xsl						\
-		service=RelatedItemsManagement					\
-		destDirectory=$(TRANSFORMED)/RelatedItemsManagement/
-	@saxonb-xslt								\
-		-ext:on								\
-		-s:$(WSDLS)/ResolutionCaseManagementService.wsdl		\
-		-xsl:$(XSL)/sdk.xsl						\
-		service=ResolutionCaseManagement				\
-		destDirectory=$(TRANSFORMED)/ResolutionCaseManagement/
+# 	@saxonb-xslt								\
+# 		-ext:on								\
+# 		-s:$(WSDLS)/BundleManagementService.wsdl			\
+# 		-xsl:$(XSL)/sdk.xsl						\
+# 		service=RelatedItemsManagement					\
+# 		destDirectory=$(TRANSFORMED)/RelatedItemsManagement/
+# 	@saxonb-xslt								\
+# 		-ext:on								\
+# 		-s:$(WSDLS)/ResolutionCaseManagementService.wsdl		\
+# 		-xsl:$(XSL)/sdk.xsl						\
+# 		service=ResolutionCaseManagement				\
+# 		destDirectory=$(TRANSFORMED)/ResolutionCaseManagement/
 	@saxonb-xslt								\
 		-ext:on								\
 		-s:$(WSDLS)/ReturnManagementService.wsdl			\

@@ -21,7 +21,7 @@ module.exports = {
     },
 
     phpClassForEBayEnumIsNotGenerated: function (name) {
-        this.isPhpNotGenerated(this.enumsClassPath(name), name);
+        this.isPhpNotGenerated(this.enumsClassPath(name), name); 
     },
 
     phpUnitForEBayEnumIsGenerated: function (name) {
@@ -49,7 +49,7 @@ module.exports = {
     },
 
     isPhpNotGenerated: function (phpFilePath, name) {
-        this.test.ok(!fs.exists(phpFilePath), 'Should not generate PHP for ' + name + '.');
+        this.test.ok(!fs.existsSync(phpFilePath), 'Should not generate PHP for ' + name + '.');
     },
 
     typesClassPath: function (name) {

@@ -21,7 +21,7 @@ const writeWsdl = (types, filename) => {
     '</wsdl:definitions>'
   ].join('');
 
-  fs.writeFile(`wsdls/${filename}.wsdl`, xml);
+  fs.writeFileSync(`wsdls/${filename}.wsdl`, xml);
 };
 
 const createWsdl = (serviceUrl, filename) => {

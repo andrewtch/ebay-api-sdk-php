@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns0="http://www.ebay.com/marketplace/marketplacecatalog/v1/services" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://www.ebay.com/marketplace/marketplacecatalog/v1/services" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ProductService" targetNamespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns0="https://www.ebay.com/marketplace/marketplacecatalog/v1/services" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="https://www.ebay.com/marketplace/marketplacecatalog/v1/services" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ProductService" targetNamespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services">
   <wsdl:documentation/>
   <wsdl:types>
-    <xs:schema xmlns:tns="http://www.ebay.com/marketplace/marketplacecatalog/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+    <xs:schema xmlns:tns="https://www.ebay.com/marketplace/marketplacecatalog/v1/services" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services">
       <xs:element name="findProductsRequest" type="tns:FindProductsRequest"/>
       <xs:element name="findProductsResponse" type="tns:FindProductsResponse"/>
       <xs:complexType name="FindProductsRequest">
@@ -404,7 +404,7 @@
       <xs:complexType name="StockPhotoURL">
         <xs:annotation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
           </xs:appinfo>
           <xs:documentation>
 						Thumbnail and standard stockphoto URLs.
@@ -549,11 +549,6 @@
                   <CallName>findProductsByCompatibility</CallName>
                   <RequiredInput>Conditionally</RequiredInput>
                 </CallInfo>
-                <SeeLink>
-                  <URL>http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/GetCategory2CS.html</URL>
-                  <Title>GetCategory2CS</Title>
-                  <For>information to identify catalog-enabled categories.</For>
-                </SeeLink>
                 <SeeLink>
                   <URL>http://developer.ebay.com/DevZone/XML/docs/Reference/eBay/GetCategoryFeatures.html</URL>
                   <Title>GetCategoryFeatures</Title>
@@ -926,7 +921,7 @@
       <xsd:complexType abstract="true" name="BaseServiceRequest">
         <xsd:annotation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+            <typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="https://www.ebay.com/marketplace/services"/>
           </xs:appinfo>
           <xs:documentation>
 						This is the base class for request container for
@@ -945,7 +940,7 @@
 						user.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+            <typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="https://www.ebay.com/marketplace/services"/>
           </xs:appinfo>
         </xsd:annotation>
         <xsd:restriction base="xsd:string">
@@ -987,7 +982,7 @@
       <xsd:complexType abstract="true" name="BaseServiceResponse">
         <xsd:annotation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+            <typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="https://www.ebay.com/marketplace/services"/>
           </xs:appinfo>
           <xs:documentation>
 						Base response container for all service operations. Contains error
@@ -1072,7 +1067,7 @@
 						application failures and cannot be corrected by changing request values.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+            <typeLibrarySource library="SOACommonTypeLibrary" namespace="https://www.ebay.com/marketplace/services"/>
           </xs:appinfo>
         </xsd:annotation>
         <xsd:restriction base="xsd:token">
@@ -1124,7 +1119,7 @@
 						A container for error details.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+            <typeLibrarySource library="SOACommonTypeLibrary" namespace="https://www.ebay.com/marketplace/services"/>
           </xs:appinfo>
         </xsd:annotation>
         <xsd:sequence>
@@ -1304,7 +1299,7 @@
 						not reported here, but are instead reported as part of a SOAP fault.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+            <typeLibrarySource library="SOACommonTypeLibrary" namespace="https://www.ebay.com/marketplace/services"/>
           </xs:appinfo>
         </xsd:annotation>
         <xsd:sequence>
@@ -1329,7 +1324,7 @@
 						Contextual data associated with an error.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+            <typeLibrarySource library="SOACommonTypeLibrary" namespace="https://www.ebay.com/marketplace/services"/>
           </xs:appinfo>
         </xsd:annotation>
         <xsd:simpleContent>
@@ -1360,7 +1355,7 @@
 						or a less severe error (a warning) that should be communicated to the user.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="SOACommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+            <typeLibrarySource library="SOACommonTypeLibrary" namespace="https://www.ebay.com/marketplace/services"/>
           </xs:appinfo>
         </xsd:annotation>
         <xsd:restriction base="xsd:token">
@@ -1397,7 +1392,7 @@
 						the details associated with the returned items.
 					</xs:documentation>
           <xsd:appinfo>
-            <xsd:typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+            <xsd:typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="https://www.ebay.com/marketplace/services"/>
           </xsd:appinfo>
         </xsd:annotation>
         <xsd:sequence>
@@ -1455,7 +1450,7 @@
 						search criteria.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="http://www.ebay.com/marketplace/services"/>
+            <typeLibrarySource library="MarketPlaceServiceCommonTypeLibrary" namespace="https://www.ebay.com/marketplace/services"/>
           </xs:appinfo>
         </xsd:annotation>
         <xsd:sequence>
@@ -1553,7 +1548,7 @@
 						Type to specify order for sorting compatibility properties.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
           </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -1597,7 +1592,7 @@
 						Defines the order type as Ascending or Descending
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
           </xs:appinfo>
         </xs:annotation>
         <xs:restriction base="xs:string">
@@ -1626,7 +1621,7 @@
 						used for property name and order can be either Ascending or Descending.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
           </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
@@ -1675,7 +1670,7 @@
 						Specifies the order in which properties will considered for sorting.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services"/>
           </xs:appinfo>
         </xs:annotation>
         <xs:restriction base="xs:token">
@@ -1972,7 +1967,7 @@
 						Container for notes related to a product in the eBay catalog.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services">
 						</typeLibrarySource>
           </xs:appinfo>
         </xs:annotation>
@@ -1999,7 +1994,7 @@
 						This class holds a numeric value
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services">
 						</typeLibrarySource>
           </xs:appinfo>
         </xs:annotation>
@@ -2192,7 +2187,7 @@
 						Container type for product data.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services">
 						</typeLibrarySource>
           </xs:appinfo>
         </xs:annotation>
@@ -2331,7 +2326,7 @@
 						Type could be ePID, MementoString as well as ISBN, UPC, EAN, Brand_MPN.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services">
 						</typeLibrarySource>
           </xs:appinfo>
         </xs:annotation>
@@ -2462,7 +2457,7 @@
 						half sell flow.
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services">
 						</typeLibrarySource>
           </xs:appinfo>
         </xs:annotation>
@@ -2530,7 +2525,7 @@
 						A property name and corresponding value (a name/value pair).
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services">
 						</typeLibrarySource>
           </xs:appinfo>
         </xs:annotation>
@@ -2611,7 +2606,7 @@
 						This class holds a String value
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services">
 						</typeLibrarySource>
           </xs:appinfo>
         </xs:annotation>
@@ -2649,7 +2644,7 @@
 						This class holds a URL value
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services">
 						</typeLibrarySource>
           </xs:appinfo>
         </xs:annotation>
@@ -2691,7 +2686,7 @@
 						A value can be one of the types: text (string), a number (
 					</xs:documentation>
           <xs:appinfo>
-            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="http://www.ebay.com/marketplace/marketplacecatalog/v1/services">
+            <typeLibrarySource library="MarketplaceCatalogDomainTypeLibrary" namespace="https://www.ebay.com/marketplace/marketplacecatalog/v1/services">
 						</typeLibrarySource>
           </xs:appinfo>
         </xs:annotation>
@@ -3775,7 +3770,7 @@
       <Version>1.4.0</Version>
     </wsdl:documentation>
     <wsdl:port binding="ns0:ProductServiceSOAP12Binding" name="ProductServiceSOAP12port_http">
-      <soap12:address location="http://svcs.ebay.com/services/marketplacecatalog/ProductService/v1"/>
+      <soap12:address location="https://svcs.ebay.com/services/marketplacecatalog/ProductService/v1"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

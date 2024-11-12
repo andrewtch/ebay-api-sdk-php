@@ -2,6 +2,23 @@
 <wsdl:definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xs:schema>
+      <xs:complexType name="ActualRefund">
+        <xs:sequence>
+          <xs:element name="donationAmount" type="ns:Amount"/>
+          <xs:element name="feeCreditAmount" type="ns:Amount"/>
+          <xs:element name="totalAmount" type="ns:Amount"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ActualRefundDetail">
+        <xs:sequence>
+          <xs:element name="actualRefund" type="ns:ActualRefund"/>
+          <xs:element name="fundings" type="ns:RefundFundingType" maxOccurs="unbounded"/>
+          <xs:element name="netChargeAmount" type="ns:Amount"/>
+          <xs:element name="outstandingAmount" type="ns:Amount"/>
+          <xs:element name="refundIssuedDate" type="ns:DateTime"/>
+          <xs:element name="refundStatus" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:complexType name="ActionDeadlines">
         <xs:sequence>
           <xs:element name="daysForBuyerToProvideProofOfShipment" type="xs:integer"/>
@@ -9,123 +26,6 @@
           <xs:element name="daysToExpireWithResponse" type="xs:integer"/>
           <xs:element name="daysToReturnItem" type="xs:integer"/>
           <xs:element name="maxDaysToFileClaim" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:simpleType name="ActivityOptionEnum">
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="BUYER_ACCEPTS_NON_PAYPAL_PARTIAL_REFUND"/>
-          <xs:enumeration value="BUYER_ACCEPTS_PARTIAL_REFUND"/>
-          <xs:enumeration value="BUYER_CLOSE_RETURN"/>
-          <xs:enumeration value="BUYER_CREATE_RETURN"/>
-          <xs:enumeration value="BUYER_DECLINE_PARTIAL_REFUND"/>
-          <xs:enumeration value="BUYER_ESCALATE"/>
-          <xs:enumeration value="BUYER_MARK_AS_RECEIVED"/>
-          <xs:enumeration value="BUYER_MARK_REFUND_RECEIVED"/>
-          <xs:enumeration value="BUYER_MARK_RETURN_SHIPPED"/>
-          <xs:enumeration value="BUYER_PRINT_SHIPPING_LABEL"/>
-          <xs:enumeration value="BUYER_PROVIDE_LABEL"/>
-          <xs:enumeration value="BUYER_PROVIDE_TRACKING_INFO"/>
-          <xs:enumeration value="BUYER_SEND_MESSAGE"/>
-          <xs:enumeration value="BUYER_VOID_LABEL"/>
-          <xs:enumeration value="DELETE_FILE"/>
-          <xs:enumeration value="DISPOSITION_RULE_AUTO_REFUND"/>
-          <xs:enumeration value="DISPOSITION_RULE_AUTO_ROUTE"/>
-          <xs:enumeration value="DISPOSITION_RULE_REPLACE_SEND_NO_SHIP"/>
-          <xs:enumeration value="EMAIL_SHIPPING_LABEL"/>
-          <xs:enumeration value="GENERAL_TIME_OUT"/>
-          <xs:enumeration value="NOTIFIED_DELIVERED"/>
-          <xs:enumeration value="NOTIFIED_SHIPPED"/>
-          <xs:enumeration value="NOTIFY_REPLACEMENT_DELIVERED"/>
-          <xs:enumeration value="NOTIFY_REPLACEMENT_SHIPPED"/>
-          <xs:enumeration value="NOTIFY_UPDATE_REFUND_STATUS"/>
-          <xs:enumeration value="OTHER"/>
-          <xs:enumeration value="REMINDER_BUYER_TO_SHIP"/>
-          <xs:enumeration value="REMINDER_FOR_REFUND"/>
-          <xs:enumeration value="REMINDER_FOR_REFUND_NO_SHIPPING"/>
-          <xs:enumeration value="REMINDER_FOR_RMA"/>
-          <xs:enumeration value="REMINDER_FOR_SHIPPING"/>
-          <xs:enumeration value="SELLER_APPROVE_REQUEST"/>
-          <xs:enumeration value="SELLER_DECLINE_REQUEST"/>
-          <xs:enumeration value="SELLER_ESCALATE"/>
-          <xs:enumeration value="SELLER_ISSUE_REFUND"/>
-          <xs:enumeration value="SELLER_ISSUE_STORE_CREDIT_REFUND"/>
-          <xs:enumeration value="SELLER_MARK_AS_RECEIVED"/>
-          <xs:enumeration value="SELLER_MARK_REFUND_SENT"/>
-          <xs:enumeration value="SELLER_MARK_REPLACEMENT_SHIPPED"/>
-          <xs:enumeration value="SELLER_OFFER_PARTIAL_REFUND"/>
-          <xs:enumeration value="SELLER_OFFER_RETURNS"/>
-          <xs:enumeration value="SELLER_PRINT_SHIPPING_LABEL"/>
-          <xs:enumeration value="SELLER_PROVIDE_LABEL"/>
-          <xs:enumeration value="SELLER_PROVIDE_RMA"/>
-          <xs:enumeration value="SELLER_PROVIDE_TRACKING_INFO"/>
-          <xs:enumeration value="SELLER_SEND_MESSAGE"/>
-          <xs:enumeration value="SELLER_VOID_LABEL"/>
-          <xs:enumeration value="SUBMIT_FILE"/>
-          <xs:enumeration value="SYSTEM_CREATE_RETURN"/>
-          <xs:enumeration value="TIME_OUT_AFTER_DECLINE"/>
-          <xs:enumeration value="TIME_OUT_AFTER_REFUNDED"/>
-          <xs:enumeration value="TIME_OUT_AFTER_REPLACED"/>
-          <xs:enumeration value="TIME_OUT_FOR_AUTHORIZE"/>
-          <xs:enumeration value="TIME_OUT_FOR_AUTO_REFUND"/>
-          <xs:enumeration value="TIME_OUT_FOR_BUYER_RECOUP"/>
-          <xs:enumeration value="TIME_OUT_FOR_DELIVERY"/>
-          <xs:enumeration value="TIME_OUT_FOR_ESCALATION"/>
-          <xs:enumeration value="TIME_OUT_FOR_ESCALATION_AFTER_SMIR"/>
-          <xs:enumeration value="TIME_OUT_FOR_ITEM_REPLACED"/>
-          <xs:enumeration value="TIME_OUT_FOR_MARK_REFUND_RECEIVED"/>
-          <xs:enumeration value="TIME_OUT_FOR_MARK_REFUND_SENT"/>
-          <xs:enumeration value="TIME_OUT_FOR_MASS_PAYOUT"/>
-          <xs:enumeration value="TIME_OUT_FOR_PAYOUT"/>
-          <xs:enumeration value="TIME_OUT_FOR_PROVIDE_LABEL"/>
-          <xs:enumeration value="TIME_OUT_FOR_REFUND"/>
-          <xs:enumeration value="TIME_OUT_FOR_REPLACEMENT_DELIVERED_ITEM_NOT_RETURNED"/>
-          <xs:enumeration value="TIME_OUT_FOR_REPLACEMENT_SHIPPED"/>
-          <xs:enumeration value="TIME_OUT_FOR_RETURN_SHIPPING"/>
-          <xs:enumeration value="TIME_OUT_FOR_RMA"/>
-          <xs:enumeration value="TIME_OUT_FOR_SELLER_INVOICE"/>
-          <xs:enumeration value="TIME_OUT_FOR_SELLER_PAYOUT"/>
-          <xs:enumeration value="TIME_OUT_FOR_SHIPMENT_TRACKING"/>
-          <xs:enumeration value="TIME_OUT_FOR_SHIPPING"/>
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:complexType name="ActualRefundDetailType">
-        <xs:sequence>
-          <xs:element name="actualRefund" type="ns:RefundDetailType"/>
-          <xs:element name="refundInitiationType" type="ns:ReturnRefundInitiatorEnum"/>
-          <xs:element name="refundIssuedDate" type="ns:DateTime"/>
-          <xs:element name="refundStatus" type="xs:token"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="Address">
-        <xs:sequence>
-          <xs:element name="addressLine1" type="xs:string"/>
-          <xs:element name="addressLine2" type="xs:string"/>
-          <xs:element name="addressType" type="ns:AddressTypeEnum"/>
-          <xs:element name="city" type="xs:string"/>
-          <xs:element name="country" type="ns:CountryCodeEnum"/>
-          <xs:element name="county" type="xs:string"/>
-          <xs:element name="isTransliterated" type="xs:boolean"/>
-          <xs:element name="nationalRegion" type="xs:string"/>
-          <xs:element name="postalCode" type="xs:string"/>
-          <xs:element name="script" type="ns:LanguageScriptEnum"/>
-          <xs:element name="stateOrProvince" type="xs:string"/>
-          <xs:element name="transliteratedFromScript" type="ns:LanguageScriptEnum"/>
-          <xs:element name="worldRegion" type="ns:WorldRegionEnum"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:simpleType name="AddressTypeEnum">
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="BUSINESS"/>
-          <xs:enumeration value="PO_BOX"/>
-          <xs:enumeration value="RESIDENCE"/>
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:complexType name="Amount">
-        <xs:sequence>
-          <xs:element name="convertedFromCurrency" type="ns:CurrencyCodeEnum"/>
-          <xs:element name="convertedFromValue" type="xs:double"/>
-          <xs:element name="currency" type="ns:CurrencyCodeEnum"/>
-          <xs:element name="value" type="xs:double"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="AppealCloseReasonEnum">
@@ -142,11 +42,12 @@
       </xs:simpleType>
       <xs:complexType name="AppealDetails">
         <xs:sequence>
-          <xs:element name="appealCloseReasonEnum" type="xs:token"/>
+          <xs:element name="appealCloseReasonEnum" type="xs:string"/>
           <xs:element name="appealDate" type="ns:DateTime"/>
           <xs:element name="appealReasonCode" type="xs:string"/>
-          <xs:element name="appealStatus" type="xs:token"/>
-          <xs:element name="appealStatusEnum" type="ns:AppealStatusEnum"/>
+          <xs:element name="appealRefundAmount" type="ns:Amount"/>
+          <xs:element name="appealStatus" type="ns:AppealGrantStatusEnum"/>
+          <xs:element name="appealStatusEnum" type="xs:string"/>
           <xs:element name="eligibleForAppeal" type="xs:boolean"/>
         </xs:sequence>
       </xs:complexType>
@@ -176,22 +77,149 @@
           <xs:enumeration value="SELLER_RECOUPED_BUYER_APPEALED_CLOSED_CASE"/>
         </xs:restriction>
       </xs:simpleType>
+      <xs:simpleType name="ActivityOptionEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="AUTO_APPROVE_REMORSE"/>
+          <xs:enumeration value="BUYER_ACCEPT_REPLACEMENT_OFFER"/>
+          <xs:enumeration value="BUYER_ACCEPTS_NON_PAYPAL_PARTIAL_REFUND"/>
+          <xs:enumeration value="BUYER_ACCEPTS_PARTIAL_REFUND"/>
+          <xs:enumeration value="BUYER_CLOSE_RETURN"/>
+          <xs:enumeration value="BUYER_CREATE_RETURN"/>
+          <xs:enumeration value="BUYER_DECLINE_PARTIAL_REFUND"/>
+          <xs:enumeration value="BUYER_DECLINE_REPLACEMENT_OFFER"/>
+          <xs:enumeration value="BUYER_ESCALATE"/>
+          <xs:enumeration value="BUYER_MARK_AS_RECEIVED"/>
+          <xs:enumeration value="BUYER_MARK_REFUND_RECEIVED"/>
+          <xs:enumeration value="BUYER_MARK_RETURN_SHIPPED"/>
+          <xs:enumeration value="BUYER_PRINT_SHIPPING_LABEL"/>
+          <xs:enumeration value="BUYER_PROVIDE_LABEL"/>
+          <xs:enumeration value="BUYER_PROVIDE_TRACKING_INFO"/>
+          <xs:enumeration value="BUYER_SEND_MESSAGE"/>
+          <xs:enumeration value="BUYER_UPDATE_TRACKING"/>
+          <xs:enumeration value="BUYER_VOID_LABEL"/>
+          <xs:enumeration value="CHARGEBACK_OPEN"/>
+          <xs:enumeration value="DELETE_FILE"/>
+          <xs:enumeration value="EMAIL_SHIPPING_LABEL"/>
+          <xs:enumeration value="EXTERNAL_CLAIM_OPENED"/>
+          <xs:enumeration value="GENERAL_TIME_OUT"/>
+          <xs:enumeration value="NOTIFIED_DELIVERED"/>
+          <xs:enumeration value="NOTIFIED_SHIPPED"/>
+          <xs:enumeration value="NOTIFY_REPLACEMENT_DELIVERED"/>
+          <xs:enumeration value="NOTIFY_REPLACEMENT_SHIPPED"/>
+          <xs:enumeration value="NOTIFY_UPDATE_REFUND_STATUS"/>
+          <xs:enumeration value="OTHER"/>
+          <xs:enumeration value="REMINDER_BUYER_TO_RESPOND_RE_OFFER"/>
+          <xs:enumeration value="REMINDER_BUYER_TO_SHIP"/>
+          <xs:enumeration value="REMINDER_FOR_REFUND"/>
+          <xs:enumeration value="REMINDER_FOR_REFUND_NO_SHIPPING"/>
+          <xs:enumeration value="REMINDER_FOR_RMA"/>
+          <xs:enumeration value="REMINDER_FOR_SHIPPING"/>
+          <xs:enumeration value="REMINDER_SELLER_TO_RESPOND"/>
+          <xs:enumeration value="REMINDER_SELLER_TO_SHIP"/>
+          <xs:enumeration value="SELLER_APPROVE_REQUEST"/>
+          <xs:enumeration value="SELLER_DECLINE_REQUEST"/>
+          <xs:enumeration value="SELLER_ESCALATE"/>
+          <xs:enumeration value="SELLER_ISSUE_REFUND"/>
+          <xs:enumeration value="SELLER_ISSUE_STORE_CREDIT_REFUND"/>
+          <xs:enumeration value="SELLER_MARK_AS_RECEIVED"/>
+          <xs:enumeration value="SELLER_MARK_REFUND_SENT"/>
+          <xs:enumeration value="SELLER_MARK_REPLACEMENT_SHIPPED"/>
+          <xs:enumeration value="SELLER_OFFER_PARTIAL_REFUND"/>
+          <xs:enumeration value="SELLER_OFFER_REPLACEMENT"/>
+          <xs:enumeration value="SELLER_OFFER_RETURNS"/>
+          <xs:enumeration value="SELLER_PRINT_SHIPPING_LABEL"/>
+          <xs:enumeration value="SELLER_PROVIDE_LABEL"/>
+          <xs:enumeration value="SELLER_PROVIDE_RMA"/>
+          <xs:enumeration value="SELLER_PROVIDE_TRACKING_INFO"/>
+          <xs:enumeration value="SELLER_RETRY_REFUND"/>
+          <xs:enumeration value="SELLER_SEND_MESSAGE"/>
+          <xs:enumeration value="SELLER_UPDATE_TRACKING"/>
+          <xs:enumeration value="SELLER_VOID_LABEL"/>
+          <xs:enumeration value="SUBMIT_FILE"/>
+          <xs:enumeration value="SYSTEM_BUYER_PARTIAL_REFUND_AS_PAYOUT"/>
+          <xs:enumeration value="SYSTEM_BUYER_REFUND_AS_PAYOUT"/>
+          <xs:enumeration value="SYSTEM_CLOSE_RETURN"/>
+          <xs:enumeration value="SYSTEM_CREATE_RETURN"/>
+          <xs:enumeration value="SYSTEM_IMMEDIATE_REFUND"/>
+          <xs:enumeration value="TIME_OUT_AFTER_DECLINE"/>
+          <xs:enumeration value="TIME_OUT_AFTER_REFUNDED"/>
+          <xs:enumeration value="TIME_OUT_AFTER_REFUNDED_AS_PAYOUT"/>
+          <xs:enumeration value="TIME_OUT_AFTER_REPLACED"/>
+          <xs:enumeration value="TIME_OUT_FOR_AUTHORIZE"/>
+          <xs:enumeration value="TIME_OUT_FOR_AUTO_REFUND"/>
+          <xs:enumeration value="TIME_OUT_FOR_BUYER_RECOUP"/>
+          <xs:enumeration value="TIME_OUT_FOR_DELIVERY"/>
+          <xs:enumeration value="TIME_OUT_FOR_ESCALATION"/>
+          <xs:enumeration value="TIME_OUT_FOR_ESCALATION_AFTER_SMIR"/>
+          <xs:enumeration value="TIME_OUT_FOR_ITEM_REPLACED"/>
+          <xs:enumeration value="TIME_OUT_FOR_MARK_REFUND_RECEIVED"/>
+          <xs:enumeration value="TIME_OUT_FOR_MARK_REFUND_SENT"/>
+          <xs:enumeration value="TIME_OUT_FOR_MASS_PAYOUT"/>
+          <xs:enumeration value="TIME_OUT_FOR_PAYOUT"/>
+          <xs:enumeration value="TIME_OUT_FOR_PROVIDE_LABEL"/>
+          <xs:enumeration value="TIME_OUT_FOR_REFUND"/>
+          <xs:enumeration value="TIME_OUT_FOR_REPLACEMENT_DELIVERED_ITEM_NOT_RETURNED"/>
+          <xs:enumeration value="TIME_OUT_FOR_REPLACEMENT_SHIPPED"/>
+          <xs:enumeration value="TIME_OUT_FOR_RETURN_SHIPPING"/>
+          <xs:enumeration value="TIME_OUT_FOR_RMA"/>
+          <xs:enumeration value="TIME_OUT_FOR_SELLER_INVOICE"/>
+          <xs:enumeration value="TIME_OUT_FOR_SELLER_PAYOUT"/>
+          <xs:enumeration value="TIME_OUT_FOR_SHIPMENT_TRACKING"/>
+          <xs:enumeration value="TIME_OUT_FOR_SHIPPING"/>
+          <xs:enumeration value="TIME_OUT_FOR_SHIPPING_SYSTEM_CLOSE"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="ActualRefundDetailType">
+        <xs:sequence>
+          <xs:element name="actualRefund" type="ns:RefundDetailType"/>
+          <xs:element name="fundings" type="ns:RefundFundingType" maxOccurs="unbounded"/>
+          <xs:element name="netChargeAmount" type="ns:Amount"/>
+          <xs:element name="outstandingAmount" type="ns:Amount"/>
+          <xs:element name="refundInitiationType" type="ns:ReturnRefundInitiatorEnum"/>
+          <xs:element name="refundIssuedDate" type="ns:DateTime"/>
+          <xs:element name="refundStatus" type="ns:Refund_MoneyMovementStatusEnum"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:complexType name="AvailableOptionType">
         <xs:sequence>
-          <xs:element name="actionType" type="xs:token"/>
+          <xs:element name="actionType" type="ns:ActivityOptionEnum"/>
           <xs:element name="actionURL" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="BuyerCloseCaseRequest">
+      <xs:complexType name="Address">
         <xs:sequence>
-          <xs:element name="closeReason" type="xs:token"/>
-          <xs:element name="comments" type="ns:Text"/>
+          <xs:element name="addressLine1" type="xs:string"/>
+          <xs:element name="addressLine2" type="xs:string"/>
+          <xs:element name="addressType" type="xs:string"/>
+          <xs:element name="city" type="xs:string"/>
+          <xs:element name="country" type="xs:string"/>
+          <xs:element name="county" type="xs:string"/>
+          <xs:element name="isTransliterated" type="xs:boolean"/>
+          <xs:element name="nationalRegion" type="xs:string"/>
+          <xs:element name="postalCode" type="xs:string"/>
+          <xs:element name="script" type="xs:string"/>
+          <xs:element name="stateOrProvince" type="xs:string"/>
+          <xs:element name="transliteratedFromScript" type="xs:string"/>
+          <xs:element name="worldRegion" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="BuyerCloseInquiryRequest">
+      <xs:simpleType name="AddressTypeEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="BUSINESS"/>
+          <xs:enumeration value="DIPLOMATIC"/>
+          <xs:enumeration value="MILITARY"/>
+          <xs:enumeration value="OTHER"/>
+          <xs:enumeration value="PO_BOX"/>
+          <xs:enumeration value="RESIDENCE"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="Amount">
         <xs:sequence>
-          <xs:element name="closeReason" type="xs:token"/>
-          <xs:element name="comments" type="ns:Text"/>
+          <xs:element name="convertedFromCurrency" type="xs:string"/>
+          <xs:element name="convertedFromValue" type="xs:double"/>
+          <xs:element name="currency" type="xs:string"/>
+          <xs:element name="exchangeRate" type="xs:string"/>
+          <xs:element name="value" type="xs:double"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="BuyerCloseReasonEnum">
@@ -202,12 +230,25 @@
           <xs:enumeration value="WOULD_RATHER_KEEP_THE_ITEM"/>
         </xs:restriction>
       </xs:simpleType>
+      <xs:complexType name="BuyerCloseCaseRequest">
+        <xs:sequence>
+          <xs:element name="closeReason" type="ns:BuyerCloseReasonEnum"/>
+          <xs:element name="comments" type="ns:Text"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="BuyerCloseInquiryRequest">
+        <xs:sequence>
+          <xs:element name="closeReason" type="ns:BuyerCloseReasonEnum"/>
+          <xs:element name="comments" type="ns:Text"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:simpleType name="BuyerCloseReturnReasonEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="BUYER_NO_LONGER_WANTS_RETURN"/>
           <xs:enumeration value="BUYER_RECEIVED_REFUND"/>
           <xs:enumeration value="BUYER_RECEIVED_REPLACEMENT"/>
           <xs:enumeration value="BUYER_STARTED_RETURN_ACCIDENTALLY"/>
+          <xs:enumeration value="CHARGE_BACK_OPENED"/>
           <xs:enumeration value="OTHER"/>
           <xs:enumeration value="UNKNOWN"/>
         </xs:restriction>
@@ -215,11 +256,10 @@
       <xs:complexType name="CancelActivityHistory">
         <xs:sequence>
           <xs:element name="actionDate" type="ns:DateTime"/>
-          <xs:element name="activityParty" type="xs:token"/>
-          <xs:element name="activityType" type="ns:CancelActivityTypeEnum"/>
-          <xs:element name="cancelStateFrom" type="xs:token"/>
-          <xs:element name="cancelStateTo" type="xs:token"/>
-          <xs:element name="cancelStatetateTo" type="xs:token"/>
+          <xs:element name="activityParty" type="ns:PartyEnum"/>
+          <xs:element name="activityType" type="xs:string"/>
+          <xs:element name="stateFrom" type="xs:string"/>
+          <xs:element name="stateTo" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="CancelActivityTypeEnum">
@@ -229,12 +269,18 @@
           <xs:enumeration value="SELLER_APPROVE"/>
           <xs:enumeration value="SELLER_CREATE_CANCEL"/>
           <xs:enumeration value="SELLER_REJECT"/>
+          <xs:enumeration value="SYSTEM_CHARGEBACK_OPENED"/>
+          <xs:enumeration value="SYSTEM_CREATE_CANCEL"/>
+          <xs:enumeration value="SYSTEM_NOTIFY_PAYOUT_STATUS"/>
           <xs:enumeration value="SYSTEM_NOTIFY_REFUND_STATUS"/>
           <xs:enumeration value="SYSTEM_NOTIFYPP_REFUND"/>
+          <xs:enumeration value="SYSTEM_PAYOUT"/>
           <xs:enumeration value="SYSTEM_REFUND"/>
           <xs:enumeration value="SYSTEM_REJECT"/>
           <xs:enumeration value="SYSTEM_TIMEOUT_FOR_APPROVAL"/>
           <xs:enumeration value="SYSTEM_TIMEOUT_FOR_CONFIRMATION"/>
+          <xs:enumeration value="SYSTEM_TIMEOUT_FOR_NOTIFY_PAYOUT_STATUS"/>
+          <xs:enumeration value="SYSTEM_TIMEOUT_FOR_NOTIFY_REFUND_STATUS"/>
           <xs:enumeration value="UNKNOWN"/>
         </xs:restriction>
       </xs:simpleType>
@@ -244,12 +290,18 @@
           <xs:enumeration value="BUYER_CONFIRM_REFUND"/>
           <xs:enumeration value="BUYER_CONFIRM_TIMEOUT_NON_PAYPAL_PAID"/>
           <xs:enumeration value="BUYER_CONFIRM_TIMEOUT_PAYPAL_PAID"/>
+          <xs:enumeration value="CHARGEBACK_DISPUTE_FILED"/>
           <xs:enumeration value="FULL_REFUNDED"/>
+          <xs:enumeration value="FULL_REFUNDED_AS_PAYOUT"/>
+          <xs:enumeration value="FULL_REFUNDED_T2_FAILED"/>
+          <xs:enumeration value="FULL_REFUNDED_T2_ONLY"/>
           <xs:enumeration value="INELIGIBLE_FOR_CANCEL"/>
+          <xs:enumeration value="PAYOUT_FAILED"/>
           <xs:enumeration value="REFUND_FAILED"/>
           <xs:enumeration value="SELLER_APPROVE_TIMEOUT_PAID"/>
           <xs:enumeration value="SELLER_APPROVE_TIMEOUT_UNPAID"/>
           <xs:enumeration value="SELLER_APPROVE_UNPAID"/>
+          <xs:enumeration value="SELLER_CANCEL_UNPAID"/>
           <xs:enumeration value="SELLER_DECLINE"/>
           <xs:enumeration value="SYSTEM_NOTIFY_SHIPPING_STATUS"/>
           <xs:enumeration value="UNKNOWN"/>
@@ -258,29 +310,32 @@
       <xs:complexType name="CancelDetail">
         <xs:sequence>
           <xs:element name="activityHistories" type="ns:CancelActivityHistory" maxOccurs="unbounded"/>
+          <xs:element name="buyerLoginName" type="xs:string"/>
           <xs:element name="buyerResponseDueDate" type="ns:DateTime"/>
           <xs:element name="cancelCloseDate" type="ns:DateTime"/>
           <xs:element name="cancelCloseReason" type="xs:token"/>
           <xs:element name="cancelId" type="xs:string"/>
           <xs:element name="cancelReason" type="xs:token"/>
           <xs:element name="cancelRequestDate" type="ns:DateTime"/>
-          <xs:element name="itemId" type="xs:string"/>
+          <xs:element name="cancelState" type="xs:string"/>
+          <xs:element name="cancelStatus" type="xs:string"/>
           <xs:element name="legacyOrderId" type="xs:string"/>
-          <xs:element name="lineItems" type="ns:OrderCancelLineItem" maxOccurs="unbounded"/>
-          <xs:element name="marketplaceId" type="ns:MarketplaceIdEnum"/>
-          <xs:element name="paymentStatus" type="xs:token"/>
-          <xs:element name="requestorType" type="xs:token"/>
+          <xs:element name="marketplaceId" type="xs:string"/>
+          <xs:element name="moneyMovementInfo" type="ns:can:MoneyMovementDetailType" maxOccurs="unbounded"/>
+          <xs:element name="partialOrderType" type="ns:PartialOrderTypeEnum"/>
+          <xs:element name="paymentStatus" type="ns:PaymentStatusEnum"/>
+          <xs:element name="payoutRecoupInfo" type="ns:PayoutRecoupInfo"/>
+          <xs:element name="refundInfo" type="ns:RefundInfo"/>
+          <xs:element name="requestorType" type="ns:PartyEnum"/>
           <xs:element name="requestRefundAmount" type="ns:Amount"/>
+          <xs:element name="sellerLoginName" type="xs:string"/>
           <xs:element name="sellerResponseDueDate" type="ns:DateTime"/>
           <xs:element name="shipmentDate" type="ns:DateTime"/>
-          <xs:element name="cancelState" type="xs:token"/>
-          <xs:element name="cancelStatus" type="xs:token"/>
-          <xs:element name="transactionId" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="CancelReasonEnum">
         <xs:restriction base="xs:token">
-          <xs:enumeration value="ADDRESS_ISSUE"/>
+          <xs:enumeration value="ADDRESS_ISSUES"/>
           <xs:enumeration value="BUYER_ASKED_CANCEL"/>
           <xs:enumeration value="BUYER_CANCEL_OR_ADDRESS_ISSUE"/>
           <xs:enumeration value="FOUND_CHEAPER_PRICE"/>
@@ -289,13 +344,18 @@
           <xs:enumeration value="OTHER"/>
           <xs:enumeration value="OUT_OF_STOCK_OR_CANNOT_FULFILL"/>
           <xs:enumeration value="PRICE_TOO_HIGH"/>
+          <xs:enumeration value="UNKNOWN"/>
           <xs:enumeration value="WONT_ARRIVE_IN_TIME"/>
+          <xs:enumeration value="WRONG_PAYMENT_METHOD"/>
+          <xs:enumeration value="WRONG_SHIPPING_ADDRESS"/>
+          <xs:enumeration value="WRONG_SHIPPING_METHOD"/>
         </xs:restriction>
       </xs:simpleType>
       <xs:complexType name="CancelSortField">
         <xs:sequence>
           <xs:element name="ascending" type="xs:boolean"/>
-          <xs:element name="enumValue" type="ns:CancelSortTypeEnum"/>
+          <xs:element name="enumValue" type="xs:token"/>
+          <xs:element name="field" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="CancelSortTypeEnum">
@@ -311,6 +371,7 @@
           <xs:enumeration value="CONFIRM_REFUND_PENDING"/>
           <xs:enumeration value="INITIAL"/>
           <xs:enumeration value="OTHER"/>
+          <xs:enumeration value="REFUND_FAILED_RETRY"/>
           <xs:enumeration value="REFUND_INITIATED"/>
           <xs:enumeration value="REFUND_PENDING"/>
         </xs:restriction>
@@ -329,28 +390,63 @@
       </xs:simpleType>
       <xs:complexType name="CancelSummary">
         <xs:sequence>
+          <xs:element name="buyerLoginName" type="xs:string"/>
           <xs:element name="buyerResponseDueDate" type="ns:DateTime"/>
           <xs:element name="cancelCloseDate" type="ns:DateTime"/>
-          <xs:element name="cancelCloseReason" type="xs:token"/>
+          <xs:element name="cancelCloseReason" type="xs:string"/>
           <xs:element name="cancelId" type="xs:string"/>
-          <xs:element name="cancelReason" type="xs:token"/>
+          <xs:element name="cancelReason" type="xs:string"/>
           <xs:element name="cancelRequestDate" type="ns:DateTime"/>
+          <xs:element name="cancelState" type="xs:string"/>
+          <xs:element name="cancelStatus" type="xs:string"/>
           <xs:element name="legacyOrderId" type="xs:string"/>
-          <xs:element name="lineItems" type="ns:OrderCancelLineItem" maxOccurs="unbounded"/>
-          <xs:element name="marketplaceId" type="ns:MarketplaceIdEnum"/>
-          <xs:element name="paymentStatus" type="xs:token"/>
-          <xs:element name="requestorType" type="xs:token"/>
+          <xs:element name="marketplaceId" type="xs:string"/>
+          <xs:element name="partialOrderType" type="ns:PartialOrderTypeEnum"/>
+          <xs:element name="paymentStatus" type="ns:PaymentStatusEnum"/>
+          <xs:element name="payoutRecoupInfo" type="ns:PayoutRecoupInfo"/>
+          <xs:element name="requestorType" type="ns:PartyEnum"/>
           <xs:element name="requestRefundAmount" type="ns:Amount"/>
+          <xs:element name="sellerLoginName" type="xs:string"/>
           <xs:element name="sellerResponseDueDate" type="ns:DateTime"/>
           <xs:element name="shipmentDate" type="ns:DateTime"/>
-          <xs:element name="cancelState" type="xs:token"/>
-          <xs:element name="cancelStatus" type="xs:token"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="CarrierShippingCostInfoType">
+      <xs:complexType name="ConfirmRefundRequest">
         <xs:sequence>
-          <xs:element name="carrier" type="xs:token"/>
-          <xs:element name="shippingCost" type="ns:ReturnShippingCostDetailType"/>
+          <xs:element name="refundDate" type="ns:DateTime"/>
+          <xs:element name="unpaidOrder" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CreateCancelRequest">
+        <xs:sequence>
+          <xs:element name="buyerPaid" type="xs:boolean"/>
+          <xs:element name="buyerPaidDate" type="ns:DateTime"/>
+          <xs:element name="cancelReason" type="xs:string"/>
+          <xs:element name="legacyOrderId" type="xs:string"/>
+          <xs:element name="relistLineItem" type="ns:RelistLineItem" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CreateCancelResponse">
+        <xs:sequence>
+          <xs:element name="cancelId" type="xs:string"/>
+          <xs:element name="orderEligibilityResult" type="ns:OrderEligibilityResult"/>
+          <xs:element name="warnings" type="ns:ErrorData" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CaseDetails">
+        <xs:sequence>
+          <xs:element name="buyerFinalAcceptResolution" type="xs:string"/>
+          <xs:element name="buyerInitExpectResolution" type="xs:string"/>
+          <xs:element name="creationDate" type="ns:DateTime"/>
+          <xs:element name="escalationDate" type="ns:DateTime"/>
+          <xs:element name="expirationDate" type="ns:DateTime"/>
+          <xs:element name="lastBuyerRespDate" type="ns:DateTime"/>
+          <xs:element name="lastSellerRespDate" type="ns:DateTime"/>
+          <xs:element name="paypalPaid" type="xs:boolean"/>
+          <xs:element name="refundAmounts" type="ns:RefundAmounts"/>
+          <xs:element name="refundChargeAmount" type="ns:Amount"/>
+          <xs:element name="refundDeadlineDate" type="ns:DateTime"/>
+          <xs:element name="refundType" type="ns:RefundType"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="CaseCloseReasonEnum">
@@ -376,6 +472,8 @@
           <xs:enumeration value="BUYER_WINS_SELLER_FAULT_FOR_FORCED_RETURN"/>
           <xs:enumeration value="BUYER_WINS_SELLER_FAULT_NO_CREDIT"/>
           <xs:enumeration value="CLOSED_CS_CLOSE"/>
+          <xs:enumeration value="CLOSED_ON_CHARGEBACK_NOTIFICATION"/>
+          <xs:enumeration value="CLOSED_ON_MONEY_MOVEMENT_AFTER_CHARGEBACK_NOTIFICATION"/>
           <xs:enumeration value="ECHECK_TIMEOUT"/>
           <xs:enumeration value="ESCALATE_CS_AUTO_DISPOSE_BUYER_WIN_SELLER_FAULT"/>
           <xs:enumeration value="ESCALATE_CS_AUTO_DISPOSE_BUYER_WIN_SELLER_FAULT_NO_RECOUP"/>
@@ -396,51 +494,38 @@
           <xs:enumeration value="UNDEFINED"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="CaseDetails">
-        <xs:sequence>
-          <xs:element name="buyerFinalAcceptResolution" type="xs:string"/>
-          <xs:element name="buyerInitExpectResolution" type="xs:string"/>
-          <xs:element name="creationDate" type="ns:DateTime"/>
-          <xs:element name="escalationDate" type="ns:DateTime"/>
-          <xs:element name="expirationDate" type="ns:DateTime"/>
-          <xs:element name="lastBuyerRespDate" type="ns:DateTime"/>
-          <xs:element name="lastSellerRespDate" type="ns:DateTime"/>
-          <xs:element name="paypalPaid" type="xs:boolean"/>
-          <xs:element name="refundAmounts" type="ns:RefundAmounts"/>
-          <xs:element name="refundDeadlineDate" type="ns:DateTime"/>
-          <xs:element name="refundType" type="ns:RefundType"/>
-        </xs:sequence>
-      </xs:complexType>
       <xs:complexType name="CaseDetailsResponse">
         <xs:sequence>
           <xs:element name="actionDeadlines" type="ns:ActionDeadlines"/>
           <xs:element name="appealDetails" type="ns:AppealDetails"/>
-          <xs:element name="buyerClosureReason" type="xs:token"/>
+          <xs:element name="buyerClosureReason" type="xs:string"/>
           <xs:element name="buyerProtectedProgramLink" type="xs:string"/>
+          <xs:element name="caseContentOnHold" type="xs:boolean"/>
           <xs:element name="caseDetails" type="ns:CaseDetails"/>
           <xs:element name="caseHistoryDetails" type="ns:ClaimHistoryResponse"/>
           <xs:element name="caseId" type="xs:string"/>
           <xs:element name="caseQuantity" type="xs:integer"/>
-          <xs:element name="caseType" type="xs:token"/>
+          <xs:element name="caseType" type="ns:CaseTypeEnum"/>
           <xs:element name="claimAmount" type="ns:Amount"/>
           <xs:element name="creationDate" type="ns:DateTime"/>
           <xs:element name="escalatedBy" type="ns:UserPartyEnum"/>
-          <xs:element name="escalateReason" type="xs:token"/>
+          <xs:element name="escalateReason" type="xs:string"/>
           <xs:element name="eventTicketsLink" type="xs:string"/>
           <xs:element name="extTransactionId" type="xs:string"/>
           <xs:element name="fsnadDaysToAddTrackingAfterShippingItem" type="xs:integer"/>
           <xs:element name="fsnadShipToSellerByDate" type="ns:DateTime"/>
           <xs:element name="initiator" type="ns:UserPartyEnum"/>
           <xs:element name="itemId" type="xs:string"/>
+          <xs:element name="itemOnHold" type="xs:boolean"/>
           <xs:element name="lastModifiedDate" type="ns:DateTime"/>
           <xs:element name="payForItemLink" type="xs:string"/>
           <xs:element name="priceSignatureConfirmationAmount" type="xs:string"/>
           <xs:element name="recalledItemLink" type="xs:string"/>
           <xs:element name="returnDetails" type="ns:ReturnAddress"/>
           <xs:element name="returnId" type="xs:string"/>
-          <xs:element name="sellerClosureReason" type="xs:token"/>
+          <xs:element name="sellerClosureReason" type="xs:string"/>
           <xs:element name="shippingFee" type="ns:Amount"/>
-          <xs:element name="status" type="xs:token"/>
+          <xs:element name="status" type="xs:string"/>
           <xs:element name="transactionId" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
@@ -476,7 +561,7 @@
         <xs:sequence>
           <xs:element name="buyer" type="xs:string"/>
           <xs:element name="caseId" type="xs:integer"/>
-          <xs:element name="caseStatusEnum" type="ns:CaseStatusEnum"/>
+          <xs:element name="caseStatusEnum" type="xs:string"/>
           <xs:element name="claimAmount" type="ns:Amount"/>
           <xs:element name="creationDate" type="ns:DateTime"/>
           <xs:element name="itemId" type="xs:integer"/>
@@ -497,20 +582,6 @@
           <xs:element name="comments" type="ns:Text"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="CheckEligibilityRequest">
-        <xs:sequence>
-          <xs:element name="checkTypes" type="ns:EligibilityCheckTypeEnum" maxOccurs="unbounded"/>
-          <xs:element name="itemId" type="xs:string"/>
-          <xs:element name="reason" type="ns:ReturnReasonEnum"/>
-          <xs:element name="returnQuantity" type="xs:integer"/>
-          <xs:element name="transactionId" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CheckEligibilityResponse">
-        <xs:sequence>
-          <xs:element name="eligibilityResultPerItem" type="ns:ReturnEligibilityPerItemType"/>
-        </xs:sequence>
-      </xs:complexType>
       <xs:complexType name="CheckInquiryEligibilityRequest">
         <xs:sequence>
           <xs:element name="itemId" type="xs:string"/>
@@ -526,15 +597,10 @@
           <xs:element name="inquiryId" type="xs:string"/>
           <xs:element name="latestPossibleFilingDate" type="ns:DateTime"/>
           <xs:element name="nonOverridableErrors" type="ns:EligibilityResponseError" maxOccurs="unbounded"/>
-          <xs:element name="paypalReasonToDenyRequestFiling" type="ns:PaymentDenialReasonEnum"/>
+          <xs:element name="paypalReasonToDenyRequestFiling" type="xs:string"/>
           <xs:element name="returnFilingDate" type="ns:DateTime"/>
           <xs:element name="returnId" type="xs:string"/>
           <xs:element name="warnings" type="ns:EligibilityResponseError" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CheckLabelPrintEligibilityResponse">
-        <xs:sequence>
-          <xs:element name="printLabelValid" type="xs:boolean"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ClaimHistoryEventModel">
@@ -552,16 +618,57 @@
           <xs:element name="shipmentTrackingDetails" type="ns:ShipmentTrackingDetailType"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:complexType name="CreateInquiryRequest">
+        <xs:sequence>
+          <xs:element name="claimQuantity" type="xs:integer"/>
+          <xs:element name="comments" type="ns:Text"/>
+          <xs:element name="desiredOutcome" type="ns:DesiredOutcomeTypeEnum"/>
+          <xs:element name="itemId" type="xs:string"/>
+          <xs:element name="transactionId" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CarrierShippingCostInfoType">
+        <xs:sequence>
+          <xs:element name="carrier" type="xs:string"/>
+          <xs:element name="shippingCost" type="ns:ReturnShippingCostDetailType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CheckEligibilityRequest">
+        <xs:sequence>
+          <xs:element name="checkTypes" type="ns:ret:EligibilityCheckTypeEnum" maxOccurs="unbounded"/>
+          <xs:element name="itemId" type="xs:string"/>
+          <xs:element name="reason" type="xs:string"/>
+          <xs:element name="returnQuantity" type="xs:integer"/>
+          <xs:element name="transactionId" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CheckEligibilityResponse">
+        <xs:sequence>
+          <xs:element name="eligibilityResultPerItem" type="ns:ReturnEligibilityPerItemType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CheckLabelPrintEligibilityResponse">
+        <xs:sequence>
+          <xs:element name="printLabelValid" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:simpleType name="CloseReturnReasonEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="AUTO_PARTIAL_REFUNDED"/>
           <xs:enumeration value="AUTO_REFUNDED"/>
+          <xs:enumeration value="BUYER_ACCEPT_LESS_THAN_FULL_REFUND"/>
+          <xs:enumeration value="BUYER_ACCEPT_LESS_THAN_FULL_REFUND_AS_PAYOUT"/>
           <xs:enumeration value="BUYER_CLOSED"/>
+          <xs:enumeration value="BUYER_NO_ACTION"/>
+          <xs:enumeration value="BUYER_PARTIAL_REFUND_AS_PAYOUT"/>
           <xs:enumeration value="BUYER_PAYOUT"/>
           <xs:enumeration value="BUYER_PAYOUT_FAILED"/>
+          <xs:enumeration value="BUYER_REFUND_AS_PAYOUT"/>
+          <xs:enumeration value="CHARGEBACK_DISPUTE_FILED"/>
           <xs:enumeration value="ESCALATED"/>
           <xs:enumeration value="FULL_REFUNDED"/>
           <xs:enumeration value="FULL_REFUNDED_BY_DISPOSITION_RULE"/>
+          <xs:enumeration value="LVT_IMMEDIATE_REFUND"/>
           <xs:enumeration value="MARK_PARTIAL_REFUND_RECEIVED"/>
           <xs:enumeration value="MARK_REFUND_RECEIVED"/>
           <xs:enumeration value="MARK_REFUND_RECEIVED_TIMEOUT"/>
@@ -581,26 +688,28 @@
       </xs:simpleType>
       <xs:complexType name="CloseReturnRequest">
         <xs:sequence>
-          <xs:element name="buyerCloseReason" type="xs:token"/>
+          <xs:element name="buyerCloseReason" type="ns:BuyerCloseReturnReasonEnum"/>
           <xs:element name="comments" type="ns:Text"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="ConditionDataRangeType">
+      <xs:complexType name="CountSummaryType">
         <xs:sequence>
-          <xs:element name="amount" type="ns:mrk:Amount"/>
+          <xs:element name="count" type="xs:integer"/>
+          <xs:element name="type" type="ns:ReturnCountFilterEnum"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="ConditionListDetailType">
+      <xs:complexType name="CreateReturnRequest">
         <xs:sequence>
-          <xs:element name="all" type="ns:ListDataType" maxOccurs="unbounded"/>
-          <xs:element name="isMultiple" type="xs:boolean"/>
-          <xs:element name="selected" type="ns:ListDataType" maxOccurs="unbounded"/>
+          <xs:element name="draftId" type="xs:string"/>
+          <xs:element name="returnRequest" type="ns:ReturnRequestType"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="ConfirmRefundRequest">
+      <xs:complexType name="CreateReturnResponse">
         <xs:sequence>
-          <xs:element name="refundDate" type="ns:DateTime"/>
-          <xs:element name="unpaidOrder" type="xs:boolean"/>
+          <xs:element name="detail" type="ns:GetDetailResponse"/>
+          <xs:element name="eligibilityResult" type="ns:ReturnEligibilityPerItemType"/>
+          <xs:element name="returnId" type="xs:string"/>
+          <xs:element name="summary" type="ns:ReturnSummaryType"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="CountryCodeEnum">
@@ -856,69 +965,6 @@
           <xs:enumeration value="ZW"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="CountSummaryType">
-        <xs:sequence>
-          <xs:element name="count" type="xs:integer"/>
-          <xs:element name="type" type="ns:ReturnCountFilterEnum"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CreateCancelRequest">
-        <xs:sequence>
-          <xs:element name="buyerPaid" type="xs:boolean"/>
-          <xs:element name="buyerPaidDate" type="ns:DateTime"/>
-          <xs:element name="cancelReason" type="xs:token"/>
-          <xs:element name="legacyOrderId" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CreateCancelResponse">
-        <xs:sequence>
-          <xs:element name="cancelId" type="xs:string"/>
-          <xs:element name="orderEligibilityResult" type="ns:OrderEligibilityResult"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CreateCustomListRequest">
-        <xs:sequence>
-          <xs:element name="customListDetail" type="ns:CustomListDetailType"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CreateCustomListResponse">
-        <xs:sequence>
-          <xs:element name="listId" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CreateDispositionRuleRequest">
-        <xs:sequence>
-          <xs:element name="ruleDetail" type="ns:RuleDetailInputType"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CreateDispositionRuleResponse">
-        <xs:sequence>
-          <xs:element name="ruleId" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CreateInquiryRequest">
-        <xs:sequence>
-          <xs:element name="claimQuantity" type="xs:integer"/>
-          <xs:element name="comments" type="ns:Text"/>
-          <xs:element name="desiredOutcome" type="xs:token"/>
-          <xs:element name="itemId" type="xs:string"/>
-          <xs:element name="transactionId" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CreateReturnRequest">
-        <xs:sequence>
-          <xs:element name="draftId" type="xs:string"/>
-          <xs:element name="returnRequest" type="ns:ReturnRequestType"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CreateReturnResponse">
-        <xs:sequence>
-          <xs:element name="detail" type="ns:GetDetailResponse"/>
-          <xs:element name="eligibilityResult" type="ns:ReturnEligibilityPerItemType"/>
-          <xs:element name="returnId" type="xs:string"/>
-          <xs:element name="summary" type="ns:ReturnSummaryType"/>
-        </xs:sequence>
-      </xs:complexType>
       <xs:simpleType name="CurrencyCodeEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="AED"/>
@@ -1078,117 +1124,108 @@
           <xs:enumeration value="ZWL"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="CustomListDataType">
-        <xs:sequence>
-          <xs:element name="id" type="xs:integer"/>
-          <xs:element name="identify" type="xs:string"/>
-          <xs:element name="name" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CustomListDetailType">
-        <xs:sequence>
-          <xs:element name="listData" type="ns:CustomListDataType" maxOccurs="unbounded"/>
-          <xs:element name="listId" type="xs:integer"/>
-          <xs:element name="listName" type="xs:string"/>
-          <xs:element name="listType" type="ns:CustomListType"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="CustomListModificationType">
-        <xs:sequence/>
-      </xs:complexType>
-      <xs:complexType name="CustomListType">
-        <xs:sequence/>
-      </xs:complexType>
-      <xs:complexType name="DateTime">
-        <xs:sequence>
-          <xs:element name="formattedValue" type="xs:string"/>
-          <xs:element name="value" type="xs:dateTime"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="DecideReturnRequest">
-        <xs:sequence>
-          <xs:element name="comments" type="ns:Text"/>
-          <xs:element name="decision" type="ns:DecisionEnum"/>
-          <xs:element name="partialRefundAmount" type="ns:Amount"/>
-          <xs:element name="RMANumber" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="DecideReturnResponse">
-        <xs:sequence>
-          <xs:element name="refundStatus" type="xs:token"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:simpleType name="DecisionEnum">
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="ACCEPT_PARTIAL_REFUND"/>
-          <xs:enumeration value="APPROVE"/>
-          <xs:enumeration value="APPROVE_WITHOUT_EBAY_LABEL"/>
-          <xs:enumeration value="DECLINE"/>
-          <xs:enumeration value="DECLINE_PARTIAL_REFUND"/>
-          <xs:enumeration value="OFFER_PARTIAL_REFUND"/>
-          <xs:enumeration value="OFFER_RETURN"/>
-          <xs:enumeration value="OFFER_RETURN_WITHOUT_LABEL"/>
-          <xs:enumeration value="PROVIDE_RMA"/>
-          <xs:enumeration value="UNKNOWN"/>
-        </xs:restriction>
-      </xs:simpleType>
       <xs:simpleType name="DesiredOutcomeTypeEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="FULL_REFUND"/>
           <xs:enumeration value="STILL_WANT_ITEM"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="DispositionRuleDetailType">
+      <xs:complexType name="DecideReturnRequest">
         <xs:sequence>
-          <xs:element name="ruleId" type="xs:string"/>
-          <xs:element name="ruleName" type="xs:string"/>
-          <xs:element name="ruleTemplate" type="ns:DispositionRuleTemplateTypeEnum"/>
+          <xs:element name="comments" type="ns:Text"/>
+          <xs:element name="decision" type="ns:DecisionEnum"/>
+          <xs:element name="keepOriginalItem" type="xs:boolean"/>
+          <xs:element name="partialRefundAmount" type="ns:Amount"/>
+          <xs:element name="RMANumber" type="xs:string"/>
+          <xs:element name="rMAProvided" type="xs:boolean"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:simpleType name="DispositionRuleTemplateTypeEnum">
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="AUTO_REFUND_NO_SHIPBACK"/>
-          <xs:enumeration value="AUTO_ROUTE"/>
-          <xs:enumeration value="OTHER"/>
-          <xs:enumeration value="SEND_REPLACEMENT_NO_SHIPBACK"/>
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:simpleType name="EligibilityCheckTypeEnum">
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="ITEM_SELECTION"/>
-          <xs:enumeration value="PRE_TRANSACTION"/>
-          <xs:enumeration value="REPLACEMENT_CREATION"/>
-          <xs:enumeration value="REPLACEMENT_ITEM_SELECTION"/>
-          <xs:enumeration value="RETURN_CREATION"/>
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:complexType name="EligibilityErrorType">
+      <xs:complexType name="DecideReturnResponse">
         <xs:sequence>
-          <xs:element name="code" type="xs:string"/>
-          <xs:element name="content" type="xs:string"/>
-          <xs:element name="description" type="xs:string"/>
+          <xs:element name="refundStatus" type="ns:Refund_MoneyMovementStatusEnum"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:simpleType name="DecisionEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="ACCEPT_PARTIAL_REFUND"/>
+          <xs:enumeration value="ACCEPT_REPLACEMENT_OFFER"/>
+          <xs:enumeration value="APPROVE"/>
+          <xs:enumeration value="APPROVE_WITHOUT_EBAY_LABEL"/>
+          <xs:enumeration value="DECLINE"/>
+          <xs:enumeration value="DECLINE_PARTIAL_REFUND"/>
+          <xs:enumeration value="DECLINE_REPLACEMENT_OFFER"/>
+          <xs:enumeration value="OFFER_PARTIAL_REFUND"/>
+          <xs:enumeration value="OFFER_REPLACEMENT"/>
+          <xs:enumeration value="OFFER_RETURN"/>
+          <xs:enumeration value="OFFER_RETURN_WITHOUT_LABEL"/>
+          <xs:enumeration value="PROVIDE_RMA"/>
+          <xs:enumeration value="UNKNOWN"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="DateTime">
+        <xs:sequence>
+          <xs:element name="formattedValue" type="xs:string"/>
+          <xs:element name="value" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ErrorCategory">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="ErrorData">
+        <xs:sequence>
+          <xs:element name="category" type="ns:ErrorCategory"/>
+          <xs:element name="domain" type="xs:string"/>
+          <xs:element name="errorId" type="xs:integer"/>
+          <xs:element name="httpStatusCode" type="xs:integer"/>
+          <xs:element name="longMessage" type="xs:string"/>
+          <xs:element name="message" type="xs:string"/>
+          <xs:element name="parameter" type="ns:ErrorParameter" maxOccurs="unbounded"/>
+          <xs:element name="severity" type="ns:ErrorSeverity"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ErrorParameter">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string"/>
+          <xs:element name="value" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ErrorSeverity">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:simpleType name="can:EligibilityCheckTypeEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="fullCheck"/>
+        </xs:restriction>
+      </xs:simpleType>
       <xs:simpleType name="EligibilityFailureReasonEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="CANCEL_WINDOW_ELAPSED"/>
           <xs:enumeration value="CANCELLATION_EXIST"/>
           <xs:enumeration value="CASE_EXIST"/>
+          <xs:enumeration value="CHARGEBACK_OPENED"/>
           <xs:enumeration value="CROSS_SITE_ORDER"/>
-          <xs:enumeration value="EBAY_NOW_ORDER_STATUS"/>
+          <xs:enumeration value="DELETED_BUYER"/>
+          <xs:enumeration value="DUPLICATE_LINEITEM"/>
+          <xs:enumeration value="ELV_RETURN_OR_REVERSAL_EXISTS"/>
+          <xs:enumeration value="FULL_REFUNDED_LINEITEM"/>
           <xs:enumeration value="FULL_REFUNDED_ORDER"/>
           <xs:enumeration value="IN_STORE_PICKUP_READY"/>
           <xs:enumeration value="INSTORE_PICKUP_MADE"/>
           <xs:enumeration value="INTERNAL_SYSTEM_ERROR"/>
+          <xs:enumeration value="INVALID_LINEITEM"/>
           <xs:enumeration value="INVALID_ORDER"/>
           <xs:enumeration value="INVALID_USER"/>
+          <xs:enumeration value="ITEM_LEVEL_ELIGIBILITY_FAILURE"/>
+          <xs:enumeration value="PARTIAL_CANCEL_NOT_ALLOWED"/>
+          <xs:enumeration value="PARTIAL_QUANTITY_NOT_ALLOWED"/>
           <xs:enumeration value="PARTIAL_REFUNDED_ORDER"/>
+          <xs:enumeration value="PAYMENT_PENDING"/>
           <xs:enumeration value="PAYPAL_DISPUTE_EXIST"/>
+          <xs:enumeration value="REQUESTED_QUANTITY_NOT_AVAILABLE"/>
           <xs:enumeration value="RETURN_EXIST"/>
           <xs:enumeration value="SHIPPED_ORDER"/>
           <xs:enumeration value="UNKNOWN"/>
           <xs:enumeration value="UNPAID_ORDER"/>
-          <xs:enumeration value="UNSUPPORTED_ORDER"/>
           <xs:enumeration value="UNSUPPORTED_PAYMENT_METHOD"/>
           <xs:enumeration value="UNSUPPORTED_SITE"/>
         </xs:restriction>
@@ -1197,6 +1234,37 @@
         <xs:sequence>
           <xs:element name="id" type="xs:string"/>
           <xs:element name="severity" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EscalateInquiryRequest">
+        <xs:sequence>
+          <xs:element name="comments" type="ns:Text"/>
+          <xs:element name="escalateInquiryReason" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EscalationEligibilityInfo">
+        <xs:sequence>
+          <xs:element name="eligible" type="xs:boolean"/>
+          <xs:element name="endTime" type="ns:DateTime"/>
+          <xs:element name="startTime" type="ns:DateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="ret:EligibilityCheckTypeEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="ITEM_SELECTION"/>
+          <xs:enumeration value="PRE_TRANSACTION"/>
+          <xs:enumeration value="REPLACEMENT_CREATION"/>
+          <xs:enumeration value="REPLACEMENT_ITEM_SELECTION"/>
+          <xs:enumeration value="RETURN_CREATION"/>
+          <xs:enumeration value="RETURN_REASON_SELECTION"/>
+          <xs:enumeration value="UNPAID_TRANSACTION"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="EligibilityErrorType">
+        <xs:sequence>
+          <xs:element name="code" type="xs:string"/>
+          <xs:element name="content" type="xs:string"/>
+          <xs:element name="description" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="EligibilityResultType">
@@ -1210,12 +1278,6 @@
           <xs:element name="returnId" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="EscalateInquiryRequest">
-        <xs:sequence>
-          <xs:element name="comments" type="ns:Text"/>
-          <xs:element name="escalationReason" type="xs:token"/>
-        </xs:sequence>
-      </xs:complexType>
       <xs:simpleType name="EscalateReasonEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="BUYER_NORESPONSE"/>
@@ -1223,9 +1285,13 @@
           <xs:enumeration value="DISAGREE_WITH_RETURN_REASON"/>
           <xs:enumeration value="ITEM_NOT_RECEIVED"/>
           <xs:enumeration value="ITEM_RECEIVED_IN_DIFFERENT_CONDITION"/>
+          <xs:enumeration value="NEW_ITEM_NOT_RECEIVED"/>
           <xs:enumeration value="NO_REFUND_FOR_RETURN_SHIPPING"/>
           <xs:enumeration value="NO_REFUND_RECEIVED"/>
           <xs:enumeration value="OTHER"/>
+          <xs:enumeration value="RECEIVED_EMPTY_BOX"/>
+          <xs:enumeration value="RECEIVED_WRONG_ITEM"/>
+          <xs:enumeration value="RESOLVED_WITH_BUYER"/>
           <xs:enumeration value="SELLER_NO_RESPONSE"/>
           <xs:enumeration value="TROUBLE_COMMUNICATION_WITH_BUYER"/>
           <xs:enumeration value="TROUBLE_COMMUNICATION_WITH_SELLER"/>
@@ -1234,19 +1300,13 @@
       <xs:complexType name="EscalateRequest">
         <xs:sequence>
           <xs:element name="comments" type="ns:Text"/>
-          <xs:element name="reason" type="xs:token"/>
+          <xs:element name="reason" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="EscalateResponse">
         <xs:sequence>
           <xs:element name="caseId" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="EscalationEligibilityInfo">
-        <xs:sequence>
-          <xs:element name="eligible" type="xs:boolean"/>
-          <xs:element name="endTime" type="ns:DateTime"/>
-          <xs:element name="startTime" type="ns:DateTime"/>
+          <xs:element name="caseUrl" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="EscalationInfoType">
@@ -1274,6 +1334,7 @@
           <xs:element name="estimatedAmount" type="ns:Amount"/>
           <xs:element name="maxAmount" type="ns:Amount"/>
           <xs:element name="minAmount" type="ns:Amount"/>
+          <xs:element name="purchasePriceDeductedPercentageList" type="xs:integer" maxOccurs="unbounded"/>
           <xs:element name="refundFeeType" type="ns:RefundFeeTypeEnum"/>
           <xs:element name="restockingFeePercentage" type="xs:string"/>
         </xs:sequence>
@@ -1281,7 +1342,21 @@
       <xs:complexType name="EstimatedShippingInfoType">
         <xs:sequence>
           <xs:element name="carriers" type="ns:CarrierShippingCostInfoType" maxOccurs="unbounded"/>
-          <xs:element name="returnShipmentPayer" type="xs:token"/>
+          <xs:element name="returnShipmentPayer" type="ns:ReturnUserRoleEnum"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="FindCancelResponse">
+        <xs:sequence>
+          <xs:element name="cancellations" type="ns:CancelSummary" maxOccurs="unbounded"/>
+          <xs:element name="paginationOutput" type="ns:PaginationOutput"/>
+          <xs:element name="total" type="xs:integer"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="FundingSource">
+        <xs:sequence>
+          <xs:element name="brand" type="ns:FundingMethodBrandEnum"/>
+          <xs:element name="memo" type="xs:string"/>
+          <xs:element name="type" type="ns:FundingMethodTypeEnum"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="FileFormatEnum">
@@ -1298,6 +1373,7 @@
         <xs:restriction base="xs:token">
           <xs:enumeration value="ITEM_RELATED"/>
           <xs:enumeration value="LABEL_RELATED"/>
+          <xs:enumeration value="REFUND_RELATED"/>
           <xs:enumeration value="UNKNOWN"/>
         </xs:restriction>
       </xs:simpleType>
@@ -1309,13 +1385,35 @@
           <xs:enumeration value="UNKNOWN"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="FindCancelResponse">
+      <xs:simpleType name="FundingMethodBrandEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="AMERICAN_EXPRESS"/>
+          <xs:enumeration value="DISCOVER"/>
+          <xs:enumeration value="MASTERCARD"/>
+          <xs:enumeration value="VISA"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="FundingMethodTypeEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="AVAILABLE_FUNDS"/>
+          <xs:enumeration value="CREDIT_CARD"/>
+          <xs:enumeration value="DIRECT_DEBIT"/>
+          <xs:enumeration value="PAY_UPON_INVOICE"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="FundingSourceType">
         <xs:sequence>
-          <xs:element name="cancellations" type="ns:CancelSummary" maxOccurs="unbounded"/>
-          <xs:element name="paginationOutput" type="ns:PaginationOutput"/>
-          <xs:element name="total" type="xs:integer"/>
+          <xs:element name="brand" type="ns:FundingMethodBrandEnum"/>
+          <xs:element name="memo" type="xs:string"/>
+          <xs:element name="type" type="ns:FundingMethodTypeEnum"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:simpleType name="FundingStatusEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="FAILED"/>
+          <xs:enumeration value="FUNDED"/>
+        </xs:restriction>
+      </xs:simpleType>
       <xs:complexType name="GetCancelDetailResponse">
         <xs:sequence>
           <xs:element name="cancelDetail" type="ns:CancelDetail"/>
@@ -1324,51 +1422,16 @@
       <xs:complexType name="GetCancelFieldGroup">
         <xs:sequence/>
       </xs:complexType>
-      <xs:complexType name="GetCustomListDetailResponse">
-        <xs:sequence>
-          <xs:element name="listDetail" type="ns:CustomListDetailType"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="GetCustomListsResponse">
-        <xs:sequence>
-          <xs:element name="listDetail" type="ns:CustomListDetailType" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:complexType>
       <xs:complexType name="GetDetailResponse">
         <xs:sequence>
           <xs:element name="detail" type="ns:ReturnDetailType"/>
           <xs:element name="summary" type="ns:ReturnSummaryType"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="GetDispositionRuleDetailResponse">
-        <xs:sequence>
-          <xs:element name="ruleDetail" type="ns:RuleDetailType"/>
-          <xs:element name="versionId" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="GetDispositionRulesResponse">
-        <xs:sequence>
-          <xs:element name="creationDisabled" type="xs:boolean"/>
-          <xs:element name="rule" type="ns:RuleDetailType" maxOccurs="unbounded"/>
-          <xs:element name="totalNumRules" type="xs:integer"/>
-          <xs:element name="versionId" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="GetDispositionRuleTemplatesResponse">
-        <xs:sequence>
-          <xs:element name="ruleTemplates" type="ns:RuleTemplateDetailType" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="GetDispositionRuleTriggerHistResponse">
-        <xs:sequence>
-          <xs:element name="historyDetail" type="ns:RuleTriggerHistDetailType" maxOccurs="unbounded"/>
-          <xs:element name="paginationOutput" type="ns:PaginationOutput"/>
-        </xs:sequence>
-      </xs:complexType>
       <xs:complexType name="GetEstimateRequest">
         <xs:sequence>
           <xs:element name="itemId" type="xs:string"/>
-          <xs:element name="reason" type="ns:ReturnReasonEnum"/>
+          <xs:element name="reason" type="xs:string"/>
           <xs:element name="returnQuantity" type="xs:integer"/>
           <xs:element name="transactionId" type="xs:string"/>
         </xs:sequence>
@@ -1382,11 +1445,6 @@
       <xs:complexType name="GetFileResponse">
         <xs:sequence>
           <xs:element name="files" type="ns:ReturnFileType" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="GetMetadataResponse">
-        <xs:sequence>
-          <xs:element name="metadata" type="ns:ReturnMetadataType" maxOccurs="unbounded"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="GetReturnCreationSessionResponse">
@@ -1404,24 +1462,19 @@
       <xs:complexType name="GetSellerReturnPreferenceResponse">
         <xs:sequence>
           <xs:element name="advanceRulesEnabled" type="xs:boolean"/>
-          <xs:element name="basicRules" type="ns:RuleDetailType" maxOccurs="unbounded"/>
-          <xs:element name="RMARequired" type="xs:boolean"/>
+          <xs:element name="rmaRequired" type="xs:boolean"/>
           <xs:element name="versionId" type="xs:integer"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="GetShippingLabelResponse">
         <xs:sequence>
-          <xs:element name="carrier" type="xs:token"/>
+          <xs:element name="carrier" type="xs:string"/>
           <xs:element name="labelContent" type="xs:string"/>
           <xs:element name="labelCost" type="ns:Amount"/>
-          <xs:element name="labelPrintStatus" type="xs:token"/>
+          <xs:element name="labelFormat" type="ns:ShippingLabelFormatEnum"/>
+          <xs:element name="labelPrintStatus" type="ns:LabelPrintStatusEnum"/>
           <xs:element name="labelURL" type="xs:string"/>
           <xs:element name="trackingNumber" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="GetStoreCategoryResponse">
-        <xs:sequence>
-          <xs:element name="categories" type="ns:StoreCategoryType" maxOccurs="unbounded"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="GetSummaryResponse">
@@ -1440,12 +1493,13 @@
           <xs:element name="trackingStatus" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="InitiateShippingLabelResponse">
+      <xs:complexType name="ItemEligibilityResult">
         <xs:sequence>
-          <xs:element name="carrier" type="xs:token"/>
-          <xs:element name="labelData" type="xs:string"/>
-          <xs:element name="labelURL" type="xs:string"/>
-          <xs:element name="trackingNumber" type="xs:string"/>
+          <xs:element name="cancelQuantity" type="xs:integer"/>
+          <xs:element name="eligible" type="xs:boolean"/>
+          <xs:element name="failureReason" type="xs:string" maxOccurs="unbounded"/>
+          <xs:element name="itemId" type="xs:string"/>
+          <xs:element name="transactionId" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="InquiryDetails">
@@ -1456,15 +1510,39 @@
           <xs:element name="expirationDate" type="ns:DateTime"/>
           <xs:element name="lastBuyerRespDate" type="ns:DateTime"/>
           <xs:element name="refundAmounts" type="ns:RefundAmounts"/>
+          <xs:element name="refundChargeAmount" type="ns:Amount"/>
           <xs:element name="refundDeadlineDate" type="ns:DateTime"/>
           <xs:element name="totalAmount" type="ns:Amount"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:complexType name="ItemDetails">
+        <xs:sequence>
+          <xs:element name="itemOnHold" type="xs:boolean"/>
+          <xs:element name="itemPictureUrl" type="xs:string"/>
+          <xs:element name="itemPrice" type="ns:Amount"/>
+          <xs:element name="itemTitle" type="xs:string"/>
+          <xs:element name="viewPurchasedItemUrl" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="INRCreationReasonEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="EMPTY_BOX"/>
+          <xs:enumeration value="INCOMPLETE_ORDER"/>
+          <xs:enumeration value="ITEM_NOT_RECEIVED_ASK_FOR_REFUND"/>
+          <xs:enumeration value="ITEM_NOT_RECEIVED_TRACKING_SHOWS_DELIVERED"/>
+          <xs:enumeration value="LATE_ORDER"/>
+          <xs:enumeration value="TRACKING_INFO_UNAVAILABLE"/>
+          <xs:enumeration value="UNKNOWN"/>
+        </xs:restriction>
+      </xs:simpleType>
       <xs:complexType name="InquiryDetailsResponse">
         <xs:sequence>
           <xs:element name="claimAmount" type="ns:Amount"/>
+          <xs:element name="creationReason" type="xs:string"/>
           <xs:element name="extTransactionId" type="xs:string"/>
           <xs:element name="initiator" type="ns:UserPartyEnum"/>
+          <xs:element name="inquiryClosureDate" type="ns:DateTime"/>
+          <xs:element name="inquiryContentOnHold" type="xs:boolean"/>
           <xs:element name="inquiryDetails" type="ns:InquiryDetails"/>
           <xs:element name="inquiryHistoryDetails" type="ns:ClaimHistoryResponse"/>
           <xs:element name="inquiryId" type="xs:string"/>
@@ -1474,8 +1552,8 @@
           <xs:element name="returnDetails" type="ns:ReturnAddress"/>
           <xs:element name="sellerMakeItRightByDate" type="ns:DateTime"/>
           <xs:element name="shippingCost" type="ns:Amount"/>
-          <xs:element name="state" type="xs:token"/>
-          <xs:element name="status" type="xs:token"/>
+          <xs:element name="state" type="xs:string"/>
+          <xs:element name="status" type="xs:string"/>
           <xs:element name="transactionId" type="xs:string"/>
           <xs:element name="viewPPTrasanctionUrl" type="xs:string"/>
         </xs:sequence>
@@ -1553,7 +1631,7 @@
           <xs:element name="claimAmount" type="ns:Amount"/>
           <xs:element name="creationDate" type="ns:DateTime"/>
           <xs:element name="inquiryId" type="xs:integer"/>
-          <xs:element name="inquiryStatusEnum" type="ns:InquiryStatusEnum"/>
+          <xs:element name="inquiryStatusEnum" type="xs:string"/>
           <xs:element name="itemId" type="xs:integer"/>
           <xs:element name="lastModifiedDate" type="ns:DateTime"/>
           <xs:element name="respondByDate" type="ns:DateTime"/>
@@ -1566,44 +1644,46 @@
           <xs:element name="comments" type="ns:Text"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:complexType name="InitiateShippingLabelResponse">
+        <xs:sequence>
+          <xs:element name="carrier" type="xs:string"/>
+          <xs:element name="labelData" type="xs:string"/>
+          <xs:element name="labelURL" type="xs:string"/>
+          <xs:element name="trackingNumber" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:complexType name="IssueRefundRequest">
         <xs:sequence>
           <xs:element name="comments" type="ns:Text"/>
           <xs:element name="refundDetail" type="ns:RefundDetailType"/>
+          <xs:element name="relistItem" type="xs:boolean"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="IssueRefundResponse">
         <xs:sequence>
-          <xs:element name="refundStatus" type="xs:token"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="ItemDetails">
-        <xs:sequence>
-          <xs:element name="itemPictureUrl" type="xs:string"/>
-          <xs:element name="itemPrice" type="ns:Amount"/>
-          <xs:element name="itemTitle" type="xs:string"/>
-          <xs:element name="viewPurchasedItemUrl" type="xs:string"/>
+          <xs:element name="refundStatus" type="ns:Refund_MoneyMovementStatusEnum"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ItemDetailType">
         <xs:sequence>
+          <xs:element name="ebayPlusTxn" type="xs:boolean"/>
           <xs:element name="itemId" type="xs:string"/>
+          <xs:element name="itemOnHold" type="xs:boolean"/>
+          <xs:element name="itemPicUrl" type="xs:string"/>
+          <xs:element name="itemPrice" type="ns:Amount"/>
+          <xs:element name="itemTitle" type="xs:string"/>
+          <xs:element name="listingSiteId" type="xs:integer"/>
+          <xs:element name="relistedItemId" type="xs:string"/>
+          <xs:element name="relistStatus" type="ns:RelistStatusEnum"/>
           <xs:element name="returnQuantity" type="xs:integer"/>
-          <xs:element name="transactionId" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="ItemEligibilityResult">
-        <xs:sequence>
-          <xs:element name="eligible" type="xs:boolean"/>
-          <xs:element name="failureReason" type="ns:EligibilityFailureReasonEnum" maxOccurs="unbounded"/>
-          <xs:element name="itemId" type="xs:string"/>
+          <xs:element name="transactionDate" type="ns:DateTime"/>
           <xs:element name="transactionId" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ItemizedRefundDetailType">
         <xs:sequence>
           <xs:element name="refundAmount" type="ns:Amount"/>
-          <xs:element name="refundFeeType" type="ns:RefundFeeTypeEnum"/>
+          <xs:element name="refundFeeType" type="xs:string"/>
           <xs:element name="restockingFeePercentage" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
@@ -1615,6 +1695,7 @@
       </xs:complexType>
       <xs:simpleType name="LabelActionEnum">
         <xs:restriction base="xs:token">
+          <xs:enumeration value="AU_LABEL"/>
           <xs:enumeration value="EBAY_LABEL"/>
           <xs:enumeration value="MARK_AS_SENT"/>
           <xs:enumeration value="NO_LABEL"/>
@@ -1644,12 +1725,16 @@
           <xs:enumeration value="it"/>
           <xs:enumeration value="ja"/>
           <xs:enumeration value="ka"/>
+          <xs:enumeration value="ko"/>
           <xs:enumeration value="nl"/>
+          <xs:enumeration value="pl"/>
           <xs:enumeration value="pt"/>
           <xs:enumeration value="ru"/>
           <xs:enumeration value="sv"/>
           <xs:enumeration value="tr"/>
+          <xs:enumeration value="vi"/>
           <xs:enumeration value="xx"/>
+          <xs:enumeration value="zh"/>
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType name="LanguageScriptEnum">
@@ -1668,10 +1753,51 @@
           <xs:enumeration value="THAI"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="ListDataType">
+      <xs:complexType name="can:MoneyMovementDetailType">
         <xs:sequence>
-          <xs:element name="id" type="xs:string"/>
-          <xs:element name="name" type="xs:string"/>
+          <xs:element name="actualAmount" type="ns:Amount"/>
+          <xs:element name="creationDate" type="ns:DateTime"/>
+          <xs:element name="moneyMovementType" type="ns:can:MoneyMovementTypeEnum"/>
+          <xs:element name="requestedAmount" type="ns:Amount"/>
+          <xs:element name="status" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="can:MoneyMovementStatusEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="FAILED"/>
+          <xs:enumeration value="PENDING"/>
+          <xs:enumeration value="REQUESTED"/>
+          <xs:enumeration value="SKIPPED"/>
+          <xs:enumeration value="SUCCESS"/>
+          <xs:enumeration value="UNKNOWN"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="can:MoneyMovementTypeEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="BUYER_PAYOUT"/>
+          <xs:enumeration value="PAYPAL_REFUND"/>
+          <xs:enumeration value="RECOUP_FROM_SELLER"/>
+          <xs:enumeration value="SELLER_VOLUNTARY_REFUND"/>
+          <xs:enumeration value="UNKNOWN"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="MoneyMovementEntries">
+        <xs:sequence>
+          <xs:element name="moneyMovementEntryList" type="ns:MoneyMovementEntry" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MoneyMovementEntry">
+        <xs:sequence>
+          <xs:element name="amount" type="ns:Amount"/>
+          <xs:element name="date" type="ns:DateTime"/>
+          <xs:element name="fundingSource" type="ns:FundingSource"/>
+          <xs:element name="fundingStatus" type="ns:FundingStatusEnum"/>
+          <xs:element name="type" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="MoneyMovementRef">
+        <xs:sequence>
+          <xs:element name="idref" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="MarkAsReceivedRequest">
@@ -1681,7 +1807,7 @@
       </xs:complexType>
       <xs:complexType name="MarkAsShippedRequest">
         <xs:sequence>
-          <xs:element name="carrierEnum" type="xs:token"/>
+          <xs:element name="carrierEnum" type="xs:string"/>
           <xs:element name="carrierName" type="xs:string"/>
           <xs:element name="carrierUsed" type="xs:string"/>
           <xs:element name="comments" type="ns:Text"/>
@@ -1689,6 +1815,67 @@
           <xs:element name="trackingNumber" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:complexType name="MarkRefundSentRequest">
+        <xs:sequence>
+          <xs:element name="comments" type="xs:string"/>
+          <xs:element name="partialRefundAmount" type="ns:Amount"/>
+          <xs:element name="refundDetail" type="ns:RefundDetailType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ret:MoneyMovementDetailType">
+        <xs:sequence>
+          <xs:element name="actualAmount" type="ns:Amount"/>
+          <xs:element name="creationDate" type="ns:DateTime"/>
+          <xs:element name="externalPaymentId" type="xs:string"/>
+          <xs:element name="moneyMovementType" type="xs:string"/>
+          <xs:element name="paymentProvider" type="ns:PaymentProviderEnum"/>
+          <xs:element name="requestedAmount" type="ns:Amount"/>
+          <xs:element name="status" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="ret:MoneyMovementStatusEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="FAILED"/>
+          <xs:enumeration value="PENDING"/>
+          <xs:enumeration value="REQUESTED"/>
+          <xs:enumeration value="REVERSED"/>
+          <xs:enumeration value="SUCCESS"/>
+          <xs:enumeration value="TIMEDOUT"/>
+          <xs:enumeration value="UNKNOWN"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ret:MoneyMovementTypeEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="AUTO_REFUND"/>
+          <xs:enumeration value="BUYER_MASS_PAYOUT"/>
+          <xs:enumeration value="BUYER_PARTIAL_REFUND_AS_PAYOUT"/>
+          <xs:enumeration value="BUYER_PAYOUT"/>
+          <xs:enumeration value="BUYER_RECOUP"/>
+          <xs:enumeration value="BUYER_REFUND_AS_PAYOUT"/>
+          <xs:enumeration value="CHARGE_BUYER_FOR_REPLACEMENT"/>
+          <xs:enumeration value="CHARGE_BUYER_FOR_RETURN_SHIPPING"/>
+          <xs:enumeration value="DONATION"/>
+          <xs:enumeration value="INVOICE_SELLER_FOR_RETURN_SHIPPING"/>
+          <xs:enumeration value="LVT_IMMEDIATE_REFUND"/>
+          <xs:enumeration value="NON_PAYPAL_FULL_REFUND"/>
+          <xs:enumeration value="NON_PAYPAL_PARTIAL_REFUND"/>
+          <xs:enumeration value="PAYPAL_PARTIAL_REFUND"/>
+          <xs:enumeration value="PAYPAL_REFUND"/>
+          <xs:enumeration value="RECOUP_FROM_SELLER_T1"/>
+          <xs:enumeration value="REFUND_FVF_ITEM_COST"/>
+          <xs:enumeration value="REFUND_FVF_SHIPPING_COST"/>
+          <xs:enumeration value="REFUND_IMPORT_TAX_FEE"/>
+          <xs:enumeration value="REFUND_PPF"/>
+          <xs:enumeration value="REFUND_PROMOTED_LISTING_FEE"/>
+          <xs:enumeration value="REFUND_SNAD_FVF"/>
+          <xs:enumeration value="REFUND_SNAD_FVF_SHIPPING"/>
+          <xs:enumeration value="REFUND_STATE_TAX"/>
+          <xs:enumeration value="SELLER_PAYOUT"/>
+          <xs:enumeration value="SELLER_VOLUNTARY_REFUND"/>
+          <xs:enumeration value="STORE_CREDIT"/>
+          <xs:enumeration value="UNKNOWN"/>
+        </xs:restriction>
+      </xs:simpleType>
       <xs:simpleType name="MarketplaceIdEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="EBAY_AT"/>
@@ -1734,93 +1921,6 @@
           <xs:enumeration value="EBAY_ZA"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="MarkRefundSentRequest">
-        <xs:sequence>
-          <xs:element name="comments" type="xs:string"/>
-          <xs:element name="partialRefundAmount" type="ns:Amount"/>
-          <xs:element name="refundDetail" type="ns:RefundDetailType"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="ModifyCustomListRequest">
-        <xs:sequence>
-          <xs:element name="customListDetail" type="ns:CustomListDetailType"/>
-          <xs:element name="forceDelete" type="xs:boolean"/>
-          <xs:element name="operation" type="ns:CustomListModificationType"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="ModifyCustomListResponse">
-        <xs:sequence>
-          <xs:element name="listId" type="xs:integer"/>
-          <xs:element name="ruleAffected" type="ns:RuleSummaryType" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="ModifyDispositionRuleRequest">
-        <xs:sequence>
-          <xs:element name="operation" type="ns:RuleModificationType"/>
-          <xs:element name="priorityList" type="ns:PriorityListType"/>
-          <xs:element name="ruleDetail" type="ns:RuleDetailInputType"/>
-          <xs:element name="versionId" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="MoneyMovementDetailType">
-        <xs:sequence>
-          <xs:element name="actualAmount" type="ns:Amount"/>
-          <xs:element name="creationDate" type="ns:DateTime"/>
-          <xs:element name="externalPaymentId" type="xs:string"/>
-          <xs:element name="moneyMovementType" type="xs:token"/>
-          <xs:element name="paymentProvider" type="xs:token"/>
-          <xs:element name="requestedAmount" type="ns:Amount"/>
-          <xs:element name="status" type="xs:token"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="MoneyMovementEntries">
-        <xs:sequence>
-          <xs:element name="moneyMovementEntryList" type="ns:MoneyMovementEntry" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="MoneyMovementEntry">
-        <xs:sequence>
-          <xs:element name="amount" type="ns:Amount"/>
-          <xs:element name="date" type="ns:DateTime"/>
-          <xs:element name="type" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="MoneyMovementRef">
-        <xs:sequence>
-          <xs:element name="idref" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:simpleType name="MoneyMovementStatusEnum">
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="FAILED"/>
-          <xs:enumeration value="PENDING"/>
-          <xs:enumeration value="REQUESTED"/>
-          <xs:enumeration value="SUCCESS"/>
-          <xs:enumeration value="UNKNOWN"/>
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:simpleType name="MoneyMovementTypeEnum">
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="AUTO_REFUND"/>
-          <xs:enumeration value="BUYER_MASS_PAYOUT"/>
-          <xs:enumeration value="BUYER_PAYOUT"/>
-          <xs:enumeration value="BUYER_RECOUP"/>
-          <xs:enumeration value="CHARGE_BUYER_FOR_REPLACEMENT"/>
-          <xs:enumeration value="CHARGE_BUYER_FOR_RETURN_SHIPPING"/>
-          <xs:enumeration value="INVOICE_SELLER_FOR_RETURN_SHIPPING"/>
-          <xs:enumeration value="NON_PAYPAL_FULL_REFUND"/>
-          <xs:enumeration value="NON_PAYPAL_PARTIAL_REFUND"/>
-          <xs:enumeration value="PAYPAL_PARTIAL_REFUND"/>
-          <xs:enumeration value="PAYPAL_REFUND"/>
-          <xs:enumeration value="REFUND_FVF_ITEM_COST"/>
-          <xs:enumeration value="REFUND_FVF_SHIPPING_COST"/>
-          <xs:enumeration value="REFUND_PROMOTED_LISTING_FEE"/>
-          <xs:enumeration value="SELLER_PAYOUT"/>
-          <xs:enumeration value="SELLER_VOLUNTARY_REFUND"/>
-          <xs:enumeration value="STORE_CREDIT"/>
-          <xs:enumeration value="UNKNOWN"/>
-        </xs:restriction>
-      </xs:simpleType>
       <xs:simpleType name="NoSellerUploadLabelReasonEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="ITEM_TOO_LARGE"/>
@@ -1831,14 +1931,6 @@
           <xs:enumeration value="WORK_WITH_BUYER"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="OrderCancelLineItem">
-        <xs:sequence>
-          <xs:element name="itemId" type="xs:string"/>
-          <xs:element name="transactionId" type="xs:string"/>
-          <xs:element name="itemTitle" type="xs:string"/>
-          <xs:element name="cancelQuantity" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
       <xs:complexType name="OrderEligibilityCheckInfo">
         <xs:sequence>
           <xs:element name="legacyOrderId" type="xs:string"/>
@@ -1847,8 +1939,8 @@
       <xs:complexType name="OrderEligibilityResult">
         <xs:sequence>
           <xs:element name="eligible" type="xs:boolean"/>
-          <xs:element name="eligibleCancelReason" type="xs:token" maxOccurs="unbounded"/>
-          <xs:element name="failureReason" type="ns:EligibilityFailureReasonEnum" maxOccurs="unbounded"/>
+          <xs:element name="eligibleCancelReason" type="xs:string" maxOccurs="unbounded"/>
+          <xs:element name="failureReason" type="xs:string" maxOccurs="unbounded"/>
           <xs:element name="itemEligibilityResult" type="ns:ItemEligibilityResult" maxOccurs="unbounded"/>
           <xs:element name="legacyOrderId" type="xs:string"/>
         </xs:sequence>
@@ -1861,14 +1953,13 @@
           <xs:enumeration value="OTHER"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="PaginationOutput">
-        <xs:sequence>
-          <xs:element name="limit" type="xs:integer"/>
-          <xs:element name="offset" type="xs:integer"/>
-          <xs:element name="totalEntries" type="xs:integer"/>
-          <xs:element name="totalPages" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
+      <xs:simpleType name="PartialOrderTypeEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="FULL_ORDER"/>
+          <xs:enumeration value="PARTIAL_ORDER"/>
+          <xs:enumeration value="UNKNOWN"/>
+        </xs:restriction>
+      </xs:simpleType>
       <xs:simpleType name="PartyEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="BUYER"/>
@@ -1876,6 +1967,21 @@
           <xs:enumeration value="UNKNOWN"/>
         </xs:restriction>
       </xs:simpleType>
+      <xs:simpleType name="PaymentStatusEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="MARK_AS_PAID"/>
+          <xs:enumeration value="NOT_PAID"/>
+          <xs:enumeration value="ONLINE_PAID"/>
+          <xs:enumeration value="PAYPAL_PAID"/>
+          <xs:enumeration value="UNKNOWN"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="PayoutRecoupInfo">
+        <xs:sequence>
+          <xs:element name="amountToRecoup" type="ns:Amount"/>
+          <xs:element name="payoutId" type="xs:integer"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:simpleType name="PaymentDenialReasonEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="OTHER"/>
@@ -1888,37 +1994,29 @@
           <xs:enumeration value="PP_UNAUTHORIZED_TRANSACTION"/>
         </xs:restriction>
       </xs:simpleType>
+      <xs:complexType name="ProvideShipmentInfoRequest">
+        <xs:sequence>
+          <xs:element name="shippingCarrierName" type="xs:string"/>
+          <xs:element name="trackingNumber" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:simpleType name="PaymentProviderEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="PAYPAL"/>
           <xs:enumeration value="UNKNOWN"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:simpleType name="PaymentStatusEnum">
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="MARK_AS_PAID"/>
-          <xs:enumeration value="NOT_PAID"/>
-          <xs:enumeration value="PAYPAL_PAID"/>
-          <xs:enumeration value="UNKNOWN"/>
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:complexType name="PriorityListType">
-        <xs:sequence>
-          <xs:element name="ruleId" type="xs:integer" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:complexType>
       <xs:complexType name="ProvideLabelRequest">
         <xs:sequence>
-          <xs:element name="carrierEnum" type="xs:token"/>
+          <xs:element name="carrierEnum" type="xs:string"/>
           <xs:element name="carrierName" type="xs:string"/>
           <xs:element name="comments" type="ns:Text"/>
           <xs:element name="fileId" type="xs:string"/>
           <xs:element name="forwardShippingLabelProvided" type="xs:boolean"/>
           <xs:element name="labelAction" type="ns:LabelActionEnum"/>
-          <xs:element name="labelId" type="xs:string"/>
           <xs:element name="labelSentDate" type="ns:DateTime"/>
           <xs:element name="noLabelReason" type="ns:NoSellerUploadLabelReasonEnum"/>
-          <xs:element name="returnLabelCost" type="ns:b:Amount"/>
+          <xs:element name="returnLabelCost" type="ns:Amount"/>
           <xs:element name="trackingNumber" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
@@ -1930,50 +2028,37 @@
           <xs:element name="trackingNumber" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="ProvideShipmentInfoRequest">
+      <xs:complexType name="PaginationOutput">
         <xs:sequence>
-          <xs:element name="shippingCarrierName" type="xs:string"/>
+          <xs:element name="limit" type="xs:integer"/>
+          <xs:element name="offset" type="xs:integer"/>
+          <xs:element name="totalEntries" type="xs:integer"/>
+          <xs:element name="totalPages" type="xs:integer"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RefundInfo">
+        <xs:sequence>
+          <xs:element name="actualRefundDetail" type="ns:ActualRefundDetail"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RejectCancelRequest">
+        <xs:sequence>
+          <xs:element name="shipmentDate" type="ns:DateTime"/>
           <xs:element name="trackingNumber" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="RefundAmounts">
+      <xs:complexType name="RelistLineItem">
         <xs:sequence>
-          <xs:element name="buyerFinalAcceptRefundAmt" type="ns:Amount"/>
-          <xs:element name="buyerInitExpectRefundAmt" type="ns:Amount"/>
-          <xs:element name="internationalRefundAmount" type="ns:Amount"/>
-          <xs:element name="refundAmount" type="ns:Amount"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RefundDetailType">
-        <xs:sequence>
-          <xs:element name="itemizedRefundDetail" type="ns:ItemizedRefundDetailType" maxOccurs="unbounded"/>
-          <xs:element name="totalAmount" type="ns:Amount"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:simpleType name="RefundFeeTypeEnum">
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="DOMESTIC_SHIPPING"/>
-          <xs:enumeration value="IMPORT_CHARGE"/>
-          <xs:enumeration value="INTERNATIONAL_SHIPPING"/>
-          <xs:enumeration value="ORDER_ADJUSTMENT"/>
-          <xs:enumeration value="ORIGINAL_SHIPPING"/>
-          <xs:enumeration value="OTHER"/>
-          <xs:enumeration value="PURCHASE_PRICE"/>
-          <xs:enumeration value="REFUND_FROM_PAYPAL"/>
-          <xs:enumeration value="RESTOCKING_FEE"/>
-          <xs:enumeration value="RETURN_SHIPPING"/>
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:complexType name="RefundInfoType">
-        <xs:sequence>
-          <xs:element name="actualRefundDetail" type="ns:ActualRefundDetailType"/>
-          <xs:element name="estimatedRefundDetail" type="ns:EstimatedRefundDetailType"/>
+          <xs:element name="itemId" type="xs:integer"/>
+          <xs:element name="quantity" type="xs:integer"/>
+          <xs:element name="transactionId" type="xs:integer"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="RefundPaymentTypeEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="ECHECK"/>
           <xs:enumeration value="INSTANT_REFUND"/>
+          <xs:enumeration value="INTERMEDIATED_REFUND"/>
           <xs:enumeration value="OTHER"/>
           <xs:enumeration value="PAYOUT"/>
         </xs:restriction>
@@ -1986,33 +2071,18 @@
           <xs:enumeration value="SUCCESS"/>
         </xs:restriction>
       </xs:simpleType>
+      <xs:complexType name="RefundAmounts">
+        <xs:sequence>
+          <xs:element name="buyerFinalAcceptRefundAmt" type="ns:Amount"/>
+          <xs:element name="buyerInitExpectRefundAmt" type="ns:Amount"/>
+          <xs:element name="donationAmount" type="ns:Amount"/>
+          <xs:element name="feeCreditAmount" type="ns:Amount"/>
+          <xs:element name="internationalRefundAmount" type="ns:Amount"/>
+          <xs:element name="refundAmount" type="ns:Amount"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:complexType name="RefundType">
         <xs:sequence/>
-      </xs:complexType>
-      <xs:complexType name="RejectCancelRequest">
-        <xs:sequence>
-          <xs:element name="shipmentDate" type="ns:DateTime"/>
-          <xs:element name="trackingNumber" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:simpleType name="RequestTypeEnum">
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="CREATE"/>
-          <xs:enumeration value="REQUEST"/>
-          <xs:enumeration value="UNKNOWN"/>
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:complexType name="ResponseHistoryAttributesType">
-        <xs:sequence>
-          <xs:element name="carrierUsed" type="xs:string"/>
-          <xs:element name="escalateReason" type="xs:token"/>
-          <xs:element name="moneyMovementRef" type="ns:MoneyMovementRef"/>
-          <xs:element name="partialRefundAmount" type="ns:Amount"/>
-          <xs:element name="RMA" type="xs:string"/>
-          <xs:element name="sellerReturnAddress" type="ns:ReturnAddressType"/>
-          <xs:element name="toEmailAddress" type="xs:string"/>
-          <xs:element name="trackingNumber" type="xs:string"/>
-        </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ReturnAddress">
         <xs:sequence>
@@ -2031,6 +2101,73 @@
           <xs:element name="RMA" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:complexType name="RefundDeductionType">
+        <xs:sequence>
+          <xs:element name="refundDeductionAmount" type="ns:Amount"/>
+          <xs:element name="refundDeductionPercentage" type="xs:integer"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="RefundDetailType">
+        <xs:sequence>
+          <xs:element name="donationAmount" type="ns:Amount"/>
+          <xs:element name="feeCreditAmount" type="ns:Amount"/>
+          <xs:element name="itemizedRefundDetail" type="ns:ItemizedRefundDetailType" maxOccurs="unbounded"/>
+          <xs:element name="totalAmount" type="ns:Amount"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="RefundFeeTypeEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="DOMESTIC_SHIPPING"/>
+          <xs:enumeration value="IMPORT_CHARGE"/>
+          <xs:enumeration value="INTERNATIONAL_SHIPPING"/>
+          <xs:enumeration value="ITEM_IMPORT_TAX"/>
+          <xs:enumeration value="ITEM_TAX"/>
+          <xs:enumeration value="ORDER_ADJUSTMENT"/>
+          <xs:enumeration value="ORIGINAL_SHIPPING"/>
+          <xs:enumeration value="OTHER"/>
+          <xs:enumeration value="PURCHASE_PRICE"/>
+          <xs:enumeration value="REFUND_FROM_PAYPAL"/>
+          <xs:enumeration value="RETURN_SHIPPING"/>
+          <xs:enumeration value="SHIPPING_IMPORT_TAX"/>
+          <xs:enumeration value="SHIPPING_TAX"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="RefundInfoType">
+        <xs:sequence>
+          <xs:element name="actualRefundDetail" type="ns:ActualRefundDetailType"/>
+          <xs:element name="estimatedRefundDetail" type="ns:EstimatedRefundDetailType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="Refund_MoneyMovementStatusEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="FAILED"/>
+          <xs:enumeration value="PENDING"/>
+          <xs:enumeration value="REQUESTED"/>
+          <xs:enumeration value="SUCCESS"/>
+          <xs:enumeration value="UNKNOWN"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="RequestTypeEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="CREATE"/>
+          <xs:enumeration value="REQUEST"/>
+          <xs:enumeration value="UNKNOWN"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="ResponseHistoryAttributesType">
+        <xs:sequence>
+          <xs:element name="escalateReason" type="xs:string"/>
+          <xs:element name="keepOriginalItem" type="xs:boolean"/>
+          <xs:element name="moneyMovementRef" type="ns:MoneyMovementRef"/>
+          <xs:element name="partialRefundAmount" type="ns:Amount"/>
+          <xs:element name="refundDeductionType" type="ns:RefundDeductionType"/>
+          <xs:element name="rlspType" type="ns:RlspTypeEnum"/>
+          <xs:element name="RMA" type="xs:string"/>
+          <xs:element name="sellerReturnAddress" type="ns:ReturnAddressType"/>
+          <xs:element name="toEmailAddress" type="xs:string"/>
+          <xs:element name="updatedTrackingNumber" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:complexType name="ReturnAddressType">
         <xs:sequence>
           <xs:element name="address" type="ns:Address"/>
@@ -2040,8 +2177,9 @@
       <xs:complexType name="ReturnCloseInfoType">
         <xs:sequence>
           <xs:element name="buyerCloseComment" type="xs:string"/>
-          <xs:element name="buyerCloseReason" type="xs:token"/>
-          <xs:element name="returnCloseReason" type="xs:token"/>
+          <xs:element name="buyerCloseReason" type="ns:BuyerCloseReturnReasonEnum"/>
+          <xs:element name="returnCloseDate" type="ns:DateTime"/>
+          <xs:element name="returnCloseReason" type="ns:CloseReturnReasonEnum"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="ReturnCountFilterEnum">
@@ -2050,9 +2188,13 @@
           <xs:enumeration value="ALL_OPEN_REPLACEMENT"/>
           <xs:enumeration value="ALL_OPEN_RETURN"/>
           <xs:enumeration value="CLOSED"/>
+          <xs:enumeration value="EBAY_PLUS"/>
           <xs:enumeration value="ITEM_DELIVERED"/>
           <xs:enumeration value="ITEM_SHIPPED"/>
           <xs:enumeration value="RETURN_STARTED"/>
+          <xs:enumeration value="SELLER_ACTION_DUE"/>
+          <xs:enumeration value="SELLER_ACTION_OVERDUE"/>
+          <xs:enumeration value="SELLER_NO_ACTION"/>
           <xs:enumeration value="UNKNOWN"/>
         </xs:restriction>
       </xs:simpleType>
@@ -2061,7 +2203,8 @@
           <xs:element name="comments" type="ns:Text"/>
           <xs:element name="creationDate" type="ns:DateTime"/>
           <xs:element name="item" type="ns:ReturnItemType"/>
-          <xs:element name="reason" type="ns:ReturnReasonEnum"/>
+          <xs:element name="reason" type="xs:string"/>
+          <xs:element name="reasonType" type="ns:ReturnReasonTypeEnum"/>
           <xs:element name="type" type="ns:ReturnTypeEnum"/>
         </xs:sequence>
       </xs:complexType>
@@ -2070,15 +2213,16 @@
           <xs:element name="buyerAddress" type="ns:ReturnAddressType"/>
           <xs:element name="buyerLoginName" type="xs:string"/>
           <xs:element name="closeInfo" type="ns:ReturnCloseInfoType"/>
-          <xs:element name="dispositionRuleDetail" type="ns:DispositionRuleDetailType" maxOccurs="unbounded"/>
           <xs:element name="files" type="ns:ReturnFileType" maxOccurs="unbounded"/>
           <xs:element name="holdInfo" type="ns:ReturnHoldInfoType"/>
           <xs:element name="itemDetail" type="ns:ItemDetailType"/>
           <xs:element name="marketplaceId" type="ns:MarketplaceIdEnum"/>
-          <xs:element name="moneyMovementInfo" type="ns:MoneyMovementDetailType" maxOccurs="unbounded"/>
+          <xs:element name="moneyMovementInfo" type="ns:ret:MoneyMovementDetailType" maxOccurs="unbounded"/>
+          <xs:element name="payoutRecoupInfo" type="ns:ReturnPayoutRecoupInfoType"/>
           <xs:element name="refundInfo" type="ns:RefundInfoType"/>
           <xs:element name="replacementShipmentInfo" type="ns:ShipmentType"/>
           <xs:element name="responseHistory" type="ns:ReturnResponseHistoryType" maxOccurs="unbounded"/>
+          <xs:element name="returnContentOnHold" type="xs:boolean"/>
           <xs:element name="returnShipmentInfo" type="ns:ShipmentType"/>
           <xs:element name="RMANumber" type="xs:string"/>
           <xs:element name="sellerAddress" type="ns:ReturnAddressType"/>
@@ -2092,14 +2236,14 @@
       </xs:complexType>
       <xs:complexType name="ReturnEligibilityItemPerCheckTypeResult">
         <xs:sequence>
-          <xs:element name="checkType" type="ns:EligibilityCheckTypeEnum"/>
+          <xs:element name="checkType" type="ns:ret:EligibilityCheckTypeEnum"/>
           <xs:element name="eligibilityInfo" type="ns:EligibilityResultType"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ReturnEligibilityItemType">
         <xs:sequence>
           <xs:element name="itemId" type="xs:string"/>
-          <xs:element name="reason" type="ns:ReturnReasonEnum"/>
+          <xs:element name="reason" type="xs:string"/>
           <xs:element name="returnQuantity" type="xs:integer"/>
           <xs:element name="transactionId" type="xs:string"/>
         </xs:sequence>
@@ -2114,12 +2258,14 @@
         <xs:sequence>
           <xs:element name="creationDate" type="ns:DateTime"/>
           <xs:element name="fileData" type="xs:string"/>
-          <xs:element name="fileFormat" type="xs:token"/>
+          <xs:element name="fileFormat" type="ns:FileFormatEnum"/>
           <xs:element name="fileId" type="xs:string"/>
-          <xs:element name="filePurpose" type="xs:token"/>
-          <xs:element name="fileStatus" type="xs:token"/>
+          <xs:element name="fileName" type="xs:string"/>
+          <xs:element name="filePurpose" type="ns:FilePurposeEnum"/>
+          <xs:element name="fileStatus" type="ns:FileStatusEnum"/>
           <xs:element name="resizedFileData" type="xs:string"/>
-          <xs:element name="submitter" type="xs:token"/>
+          <xs:element name="secureUrl" type="xs:string"/>
+          <xs:element name="submitter" type="ns:ReturnUserRoleEnum"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ReturnHoldInfoType">
@@ -2147,23 +2293,15 @@
           <xs:element name="transactionId" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:simpleType name="ReturnMetadataKeyEnum">
-        <xs:restriction base="xs:token">
-          <xs:enumeration value="ESCALATE_REASONS"/>
-          <xs:enumeration value="RETURN_REASONS"/>
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:complexType name="ReturnMetadataType">
+      <xs:complexType name="ReturnPayoutRecoupInfoType">
         <xs:sequence>
-          <xs:element name="dataType" type="xs:string"/>
-          <xs:element name="isArray" type="xs:boolean"/>
-          <xs:element name="siteMetadataKey" type="ns:ReturnMetadataKeyEnum"/>
-          <xs:element name="values" type="xs:string" maxOccurs="unbounded"/>
+          <xs:element name="amountToRecoup" type="ns:Amount"/>
+          <xs:element name="payoutId" type="xs:integer"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ReturnPolicyType">
         <xs:sequence>
-          <xs:element name="RMARequired" type="xs:boolean"/>
+          <xs:element name="rmaRequired" type="xs:boolean"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="ReturnReasonEnum">
@@ -2174,12 +2312,15 @@
           <xs:enumeration value="BUYER_NO_SHOW"/>
           <xs:enumeration value="BUYER_NOT_SCHEDULED"/>
           <xs:enumeration value="BUYER_REFUSED_TO_PICKUP"/>
+          <xs:enumeration value="CUSTOMIZED"/>
           <xs:enumeration value="DEFECTIVE_ITEM"/>
           <xs:enumeration value="DIFFERENT_FROM_LISTING"/>
+          <xs:enumeration value="DOES_NOT_FIT"/>
           <xs:enumeration value="EXPIRED_ITEM"/>
           <xs:enumeration value="FAKE_OR_COUNTERFEIT"/>
           <xs:enumeration value="FOUND_BETTER_PRICE"/>
           <xs:enumeration value="IN_STORE_RETURN"/>
+          <xs:enumeration value="MISCATEGORIZED"/>
           <xs:enumeration value="MISSING_PARTS"/>
           <xs:enumeration value="NO_LONGER_NEED_ITEM"/>
           <xs:enumeration value="NO_REASON"/>
@@ -2195,6 +2336,15 @@
           <xs:enumeration value="WRONG_SIZE"/>
         </xs:restriction>
       </xs:simpleType>
+      <xs:simpleType name="ReturnReasonTypeEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="CANCEL"/>
+          <xs:enumeration value="INSTORE"/>
+          <xs:enumeration value="REMORSE"/>
+          <xs:enumeration value="SNAD"/>
+          <xs:enumeration value="UNKNOWN"/>
+        </xs:restriction>
+      </xs:simpleType>
       <xs:simpleType name="ReturnRefundInitiatorEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="AUTO_REFUND"/>
@@ -2204,11 +2354,11 @@
       </xs:simpleType>
       <xs:complexType name="ReturnRequestType">
         <xs:sequence>
-          <xs:element name="carrier" type="xs:token"/>
+          <xs:element name="carrier" type="xs:string"/>
           <xs:element name="comments" type="ns:Text"/>
           <xs:element name="itemId" type="xs:string"/>
-          <xs:element name="reason" type="ns:ReturnReasonEnum"/>
-          <xs:element name="requestType" type="xs:token"/>
+          <xs:element name="reason" type="xs:string"/>
+          <xs:element name="requestType" type="ns:RequestTypeEnum"/>
           <xs:element name="returnQuantity" type="xs:integer"/>
           <xs:element name="transactionId" type="xs:string"/>
           <xs:element name="type" type="ns:ReturnTypeEnum"/>
@@ -2216,19 +2366,19 @@
       </xs:complexType>
       <xs:complexType name="ReturnResponseDueType">
         <xs:sequence>
-          <xs:element name="activityDue" type="xs:token"/>
+          <xs:element name="activityDue" type="ns:ActivityOptionEnum"/>
           <xs:element name="respondByDate" type="ns:DateTime"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ReturnResponseHistoryType">
         <xs:sequence>
-          <xs:element name="activity" type="xs:token"/>
+          <xs:element name="activity" type="ns:ActivityOptionEnum"/>
           <xs:element name="attributes" type="ns:ResponseHistoryAttributesType"/>
-          <xs:element name="author" type="xs:token"/>
+          <xs:element name="author" type="ns:ReturnUserRoleEnum"/>
           <xs:element name="creationDate" type="ns:DateTime"/>
-          <xs:element name="fromState" type="xs:token"/>
+          <xs:element name="fromState" type="ns:ReturnStateEnum"/>
           <xs:element name="notes" type="xs:string"/>
-          <xs:element name="toState" type="xs:token"/>
+          <xs:element name="toState" type="ns:ReturnStateEnum"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ReturnShippingCostDetailType">
@@ -2256,7 +2406,7 @@
       <xs:complexType name="ReturnSortField">
         <xs:sequence>
           <xs:element name="ascending" type="xs:boolean"/>
-          <xs:element name="enumValue" type="ns:ReturnSortEnum"/>
+          <xs:element name="enumValue" type="xs:string"/>
           <xs:element name="field" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
@@ -2270,6 +2420,7 @@
           <xs:enumeration value="ITEM_READY_TO_SHIP"/>
           <xs:enumeration value="ITEM_SHIPPED"/>
           <xs:enumeration value="LESS_THAN_A_FULL_REFUND_ISSUED"/>
+          <xs:enumeration value="PARTIAL_REFUND_AS_PAYOUT_INITIATED"/>
           <xs:enumeration value="PARTIAL_REFUND_DECLINED"/>
           <xs:enumeration value="PARTIAL_REFUND_FAILED"/>
           <xs:enumeration value="PARTIAL_REFUND_INITIATED"/>
@@ -2277,14 +2428,19 @@
           <xs:enumeration value="PARTIAL_REFUND_REQUESTED"/>
           <xs:enumeration value="PARTIAL_REFUNDED"/>
           <xs:enumeration value="PAYOUT_INITIATED"/>
+          <xs:enumeration value="REFUND_AS_PAYOUT_INITIATED"/>
+          <xs:enumeration value="REFUND_FAILED"/>
           <xs:enumeration value="REFUND_INITIATED"/>
           <xs:enumeration value="REFUND_SENT_PENDING_CONFIRMATION"/>
           <xs:enumeration value="REFUND_TIMEOUT"/>
           <xs:enumeration value="REPLACED"/>
           <xs:enumeration value="REPLACEMENT_CLOSED"/>
           <xs:enumeration value="REPLACEMENT_DELIVERED"/>
+          <xs:enumeration value="REPLACEMENT_LABEL_PENDING"/>
+          <xs:enumeration value="REPLACEMENT_LABEL_PENDING_TIMEOUT"/>
           <xs:enumeration value="REPLACEMENT_LABEL_REQUESTED"/>
           <xs:enumeration value="REPLACEMENT_LABEL_REQUESTED_TIMEOUT"/>
+          <xs:enumeration value="REPLACEMENT_OFFER_PENDING"/>
           <xs:enumeration value="REPLACEMENT_REQUEST_TIMEOUT"/>
           <xs:enumeration value="REPLACEMENT_REQUESTED"/>
           <xs:enumeration value="REPLACEMENT_RMA_PENDING"/>
@@ -2338,21 +2494,22 @@
           <xs:element name="buyerTotalRefund" type="ns:TotalRefundAmountType"/>
           <xs:element name="creationInfo" type="ns:ReturnCreationInfoType"/>
           <xs:element name="currentType" type="ns:ReturnTypeEnum"/>
-          <xs:element name="dispositionRuleTriggered" type="ns:DispositionRuleTemplateTypeEnum" maxOccurs="unbounded"/>
           <xs:element name="escalationInfo" type="ns:EscalationInfoType"/>
+          <xs:element name="orderId" type="xs:string"/>
           <xs:element name="returnId" type="xs:string"/>
           <xs:element name="returnPolicy" type="ns:ReturnPolicyType"/>
           <xs:element name="sellerAvailableOptions" type="ns:AvailableOptionType" maxOccurs="unbounded"/>
           <xs:element name="sellerLoginName" type="xs:string"/>
           <xs:element name="sellerResponseDue" type="ns:ReturnResponseDueType"/>
           <xs:element name="sellerTotalRefund" type="ns:TotalRefundAmountType"/>
-          <xs:element name="state" type="xs:token"/>
-          <xs:element name="status" type="xs:token"/>
+          <xs:element name="state" type="ns:ReturnStateEnum"/>
+          <xs:element name="status" type="ns:ReturnStatusEnum"/>
+          <xs:element name="timeoutDate" type="ns:DateTime"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="ReturnTypeEnum">
         <xs:restriction base="xs:token">
-          <xs:enumeration value="CANCEL"/>
+          <xs:enumeration value="EXCHANGE"/>
           <xs:enumeration value="MONEY_BACK"/>
           <xs:enumeration value="REPLACEMENT"/>
           <xs:enumeration value="UNKNOWN"/>
@@ -2367,132 +2524,33 @@
           <xs:enumeration value="SYSTEM"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="RuleActionDataDetailType">
-        <xs:sequence>
-          <xs:element name="id" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RuleActionDataType">
-        <xs:sequence/>
-      </xs:complexType>
-      <xs:complexType name="RuleActionDetailType">
-        <xs:sequence>
-          <xs:element name="actionData" type="ns:RuleActionDataDetailType" maxOccurs="unbounded"/>
-          <xs:element name="dataType" type="ns:RuleActionDataType"/>
-          <xs:element name="isInvalid" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RuleActionInputType">
-        <xs:sequence>
-          <xs:element name="actionData" type="ns:RuleActionDataDetailType" maxOccurs="unbounded"/>
-          <xs:element name="actionDataType" type="ns:RuleActionDataType"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RuleConditionDetailType">
-        <xs:sequence>
-          <xs:element name="dataList" type="ns:ConditionListDetailType"/>
-          <xs:element name="isChecked" type="xs:boolean"/>
-          <xs:element name="isEbayPlus" type="xs:boolean"/>
-          <xs:element name="isInvalid" type="xs:boolean"/>
-          <xs:element name="storeCategory" type="xs:boolean"/>
-          <xs:element name="storeId" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RuleConditionInputType">
-        <xs:sequence>
-          <xs:element name="dataList" type="ns:ListDataType" maxOccurs="unbounded"/>
-          <xs:element name="dataRange" type="ns:ConditionDataRangeType"/>
-          <xs:element name="isEbayPlus" type="xs:boolean"/>
-          <xs:element name="storeCategory" type="xs:boolean"/>
-          <xs:element name="storeId" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RuleDetailInputType">
-        <xs:sequence>
-          <xs:element name="actionDetail" type="ns:RuleActionInputType"/>
-          <xs:element name="condition" type="ns:RuleConditionInputType" maxOccurs="unbounded"/>
-          <xs:element name="priority" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RuleDetailType">
-        <xs:sequence>
-          <xs:element name="actionDetail" type="ns:RuleActionDetailType"/>
-          <xs:element name="condition" type="ns:RuleConditionDetailType" maxOccurs="unbounded"/>
-          <xs:element name="ruleSummary" type="ns:RuleSummaryType"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:simpleType name="RuleListFieldGroupEnum">
+      <xs:simpleType name="RlspTypeEnum">
         <xs:restriction base="xs:token">
-          <xs:enumeration value="FULL"/>
-          <xs:enumeration value="NONE"/>
-          <xs:enumeration value="SUMMARY"/>
+          <xs:enumeration value="AU_PARCELPOINT"/>
+          <xs:enumeration value="AU_PARCELPOINT_AUPOST"/>
+          <xs:enumeration value="AU_PARCELPOINT_AUPOST_DROP"/>
+          <xs:enumeration value="AU_PARCELPOINT_COURIER_PICKUP"/>
+          <xs:enumeration value="UNKNOWN"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="RuleModificationType">
-        <xs:sequence/>
-      </xs:complexType>
-      <xs:complexType name="RuleSummaryType">
+      <xs:complexType name="RefundFundingType">
         <xs:sequence>
-          <xs:element name="count" type="xs:integer"/>
-          <xs:element name="countInTestMode" type="xs:integer"/>
-          <xs:element name="invalidAction" type="ns:RuleActionDetailType"/>
-          <xs:element name="invalidConditions" type="ns:RuleConditionDetailType" maxOccurs="unbounded"/>
-          <xs:element name="lastModifiedDate" type="xs:dateTime"/>
-          <xs:element name="priority" type="xs:integer"/>
+          <xs:element name="amount" type="ns:Amount"/>
+          <xs:element name="date" type="ns:DateTime"/>
+          <xs:element name="fundingSource" type="ns:FundingSourceType"/>
+          <xs:element name="fundingStatus" type="ns:FundingStatusEnum"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="RuleTemplateDetailType">
-        <xs:sequence>
-          <xs:element name="actionDetail" type="ns:RuleActionDetailType"/>
-          <xs:element name="condition" type="ns:RuleConditionDetailType" maxOccurs="unbounded"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="RuleTriggerHistDetailType">
-        <xs:sequence>
-          <xs:element name="itemId" type="xs:integer"/>
-          <xs:element name="returnDate" type="ns:java:XMLGregorianCalendar"/>
-          <xs:element name="returnId" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="ScanDetailType">
-        <xs:sequence>
-          <xs:element name="eventCity" type="xs:string"/>
-          <xs:element name="eventCode" type="xs:string"/>
-          <xs:element name="eventDesc" type="xs:string"/>
-          <xs:element name="eventPostalCode" type="xs:string"/>
-          <xs:element name="eventStateOrProvince" type="xs:string"/>
-          <xs:element name="eventStatus" type="xs:string"/>
-          <xs:element name="eventTime" type="ns:DateTime"/>
-        </xs:sequence>
-      </xs:complexType>
+      <xs:simpleType name="RelistStatusEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="FAILED"/>
+          <xs:enumeration value="RELIST_ELIGIBLE"/>
+          <xs:enumeration value="SUCCESS"/>
+        </xs:restriction>
+      </xs:simpleType>
       <xs:complexType name="SellerProvideRefundInfoRequest">
         <xs:sequence>
           <xs:element name="message" type="ns:Text"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="SendMessageRequest">
-        <xs:sequence>
-          <xs:element name="message" type="ns:Text"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="SendShippingLabelResponse">
-        <xs:sequence>
-          <xs:element name="labelURL" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="SetReturnCreationSessionRequest">
-        <xs:sequence>
-          <xs:element name="returnRequest" type="ns:ReturnRequestType"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="SetReturnCreationSessionResponse">
-        <xs:sequence>
-          <xs:element name="draftId" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="SetSellerReturnPreferenceRequest">
-        <xs:sequence>
-          <xs:element name="RMARequired" type="xs:boolean"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ShipmentInfoRequest">
@@ -2515,12 +2573,43 @@
           <xs:element name="trackingURL" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:complexType name="ScanDetailType">
+        <xs:sequence>
+          <xs:element name="eventCity" type="xs:string"/>
+          <xs:element name="eventCode" type="xs:string"/>
+          <xs:element name="eventDesc" type="xs:string"/>
+          <xs:element name="eventPostalCode" type="xs:string"/>
+          <xs:element name="eventStateOrProvince" type="xs:string"/>
+          <xs:element name="eventStatus" type="xs:string"/>
+          <xs:element name="eventTime" type="ns:DateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SendShippingLabelResponse">
+        <xs:sequence>
+          <xs:element name="labelURL" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SetReturnCreationSessionRequest">
+        <xs:sequence>
+          <xs:element name="returnRequest" type="ns:ReturnRequestType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SetReturnCreationSessionResponse">
+        <xs:sequence>
+          <xs:element name="draftId" type="xs:integer"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="SetSellerReturnPreferenceRequest">
+        <xs:sequence>
+          <xs:element name="rmaRequired" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:complexType name="ShipmentTrackingType">
         <xs:sequence>
           <xs:element name="active" type="xs:boolean"/>
           <xs:element name="actualDeliveryDate" type="ns:DateTime"/>
           <xs:element name="actualShipDate" type="ns:DateTime"/>
-          <xs:element name="carrierEnum" type="xs:token"/>
+          <xs:element name="carrierEnum" type="xs:string"/>
           <xs:element name="carrierId" type="xs:integer"/>
           <xs:element name="carrierName" type="xs:string"/>
           <xs:element name="carrierUsed" type="xs:string"/>
@@ -2539,7 +2628,7 @@
           <xs:element name="originAddress" type="ns:ReturnAddressType"/>
           <xs:element name="shipDate" type="ns:DateTime"/>
           <xs:element name="shipmentId" type="xs:string"/>
-          <xs:element name="shippedBy" type="xs:token"/>
+          <xs:element name="shippedBy" type="ns:ReturnUserRoleEnum"/>
           <xs:element name="shippingMethod" type="ns:ShippingMethodEnum"/>
           <xs:element name="trackingNumber" type="xs:string"/>
         </xs:sequence>
@@ -2547,7 +2636,7 @@
       <xs:complexType name="ShipmentType">
         <xs:sequence>
           <xs:element name="allShipmentTrackings" type="ns:ShipmentTrackingType" maxOccurs="unbounded"/>
-          <xs:element name="payee" type="xs:token"/>
+          <xs:element name="payee" type="ns:ReturnUserRoleEnum"/>
           <xs:element name="shipmentTracking" type="ns:ShipmentTrackingType"/>
           <xs:element name="shippingLabelCost" type="ns:ReturnShippingCostDetailType"/>
         </xs:sequence>
@@ -2555,18 +2644,34 @@
       <xs:simpleType name="ShippingCarrierEnum">
         <xs:restriction base="xs:token">
           <xs:enumeration value="AUSTRALIA_POST"/>
+          <xs:enumeration value="BARTOLINI"/>
           <xs:enumeration value="CANADA_POST"/>
+          <xs:enumeration value="COLISSIMO"/>
           <xs:enumeration value="COLLECT_PLUS"/>
+          <xs:enumeration value="CORREOS"/>
           <xs:enumeration value="DEUTSCHE_POST"/>
           <xs:enumeration value="DHL"/>
           <xs:enumeration value="FEDEX"/>
           <xs:enumeration value="HERMES"/>
+          <xs:enumeration value="LA_POSTE"/>
+          <xs:enumeration value="MONDIAL_RELAY"/>
+          <xs:enumeration value="MRW"/>
+          <xs:enumeration value="NEXIVE"/>
           <xs:enumeration value="OTHER"/>
           <xs:enumeration value="PARCEL_FORCE"/>
+          <xs:enumeration value="POSTE"/>
           <xs:enumeration value="ROYAL_MAIL"/>
+          <xs:enumeration value="SEUR"/>
           <xs:enumeration value="UNKNOWN"/>
           <xs:enumeration value="UPS"/>
           <xs:enumeration value="USPS"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ShippingLabelFormatEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="PDF"/>
+          <xs:enumeration value="PNG"/>
+          <xs:enumeration value="UNKNOWN"/>
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType name="ShippingMethodEnum">
@@ -2579,18 +2684,9 @@
       <xs:complexType name="StatusType">
         <xs:sequence/>
       </xs:complexType>
-      <xs:complexType name="StoreCategoryType">
-        <xs:sequence>
-          <xs:element name="categoryId" type="xs:integer"/>
-          <xs:element name="categoryName" type="xs:string"/>
-          <xs:element name="isLeaf" type="xs:boolean"/>
-          <xs:element name="isPseudo" type="xs:boolean"/>
-          <xs:element name="storeId" type="xs:integer"/>
-        </xs:sequence>
-      </xs:complexType>
       <xs:complexType name="SubmitFileRequest">
         <xs:sequence>
-          <xs:element name="filePurpose" type="xs:token"/>
+          <xs:element name="filePurpose" type="ns:FilePurposeEnum"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="SubmitFileResponse">
@@ -2598,12 +2694,9 @@
           <xs:element name="removedFileIds" type="xs:string" maxOccurs="unbounded"/>
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="Text">
+      <xs:complexType name="SendMessageRequest">
         <xs:sequence>
-          <xs:element name="content" type="xs:string"/>
-          <xs:element name="language" type="ns:LanguageEnum"/>
-          <xs:element name="translatedFromContent" type="xs:string"/>
-          <xs:element name="translatedFromLanguage" type="ns:LanguageEnum"/>
+          <xs:element name="message" type="ns:Text"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="TotalRefundAmountType">
@@ -2621,27 +2714,12 @@
           <xs:enumeration value="UNKNOWN"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="UpdateTrackingRequest">
+      <xs:complexType name="Text">
         <xs:sequence>
-          <xs:element name="newCarrierEnum" type="ns:ShippingCarrierEnum"/>
-          <xs:element name="newCarrierName" type="xs:string"/>
-          <xs:element name="newTrackingNumber" type="xs:string"/>
-          <xs:element name="usedCarrierEnum" type="ns:ShippingCarrierEnum"/>
-          <xs:element name="usedCarrierName" type="xs:string"/>
-          <xs:element name="usedTrackingNumber" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="UploadFileRequest">
-        <xs:sequence>
-          <xs:element name="data" type="xs:string" maxOccurs="unbounded"/>
-          <xs:element name="fileName" type="xs:string"/>
-          <xs:element name="filePurpose" type="xs:token"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="UploadFileResponse">
-        <xs:sequence>
-          <xs:element name="compressedFileData" type="xs:string"/>
-          <xs:element name="fileId" type="xs:string"/>
+          <xs:element name="content" type="xs:string"/>
+          <xs:element name="language" type="xs:string"/>
+          <xs:element name="translatedFromContent" type="xs:string"/>
+          <xs:element name="translatedFromLanguage" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="UserPartyEnum">
@@ -2653,12 +2731,35 @@
           <xs:enumeration value="UNKNOWN"/>
         </xs:restriction>
       </xs:simpleType>
-      <xs:complexType name="VoidLabelRequest">
+      <xs:complexType name="UpdateTrackingRequest">
         <xs:sequence>
-          <xs:element name="comments" type="ns:Text"/>
-          <xs:element name="labelId" type="xs:string"/>
+          <xs:element name="newCarrierEnum" type="xs:string"/>
+          <xs:element name="newCarrierName" type="xs:string"/>
+          <xs:element name="newTrackingNumber" type="xs:string"/>
+          <xs:element name="usedCarrierEnum" type="xs:string"/>
+          <xs:element name="usedCarrierName" type="xs:string"/>
+          <xs:element name="usedTrackingNumber" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:complexType name="UploadFileRequest">
+        <xs:sequence>
+          <xs:element name="data" type="xs:string"/>
+          <xs:element name="fileName" type="xs:string"/>
+          <xs:element name="filePurpose" type="ns:FilePurposeEnum"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="UploadFileResponse">
+        <xs:sequence>
+          <xs:element name="compressedFileData" type="xs:string"/>
+          <xs:element name="fileId" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="UserRoleFilterEnum">
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="BUYER"/>
+          <xs:enumeration value="SELLER"/>
+        </xs:restriction>
+      </xs:simpleType>
       <xs:complexType name="VoluntaryRefundResponse">
         <xs:sequence>
           <xs:element name="refundResult" type="ns:VoluntaryRefundResult"/>
@@ -2666,8 +2767,14 @@
       </xs:complexType>
       <xs:complexType name="VoluntaryRefundResult">
         <xs:sequence>
-          <xs:element name="refundSource" type="xs:token"/>
-          <xs:element name="refundStatus" type="xs:token"/>
+          <xs:element name="refundSource" type="ns:RefundPaymentTypeEnum"/>
+          <xs:element name="refundStatus" type="ns:RefundStatusEnum"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="VoidLabelRequest">
+        <xs:sequence>
+          <xs:element name="comments" type="ns:Text"/>
+          <xs:element name="labelId" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:simpleType name="WorldRegionEnum">
@@ -2707,12 +2814,6 @@
           <xs:element name="resolution" type="xs:string"/>
           <xs:element name="organization" type="xs:string"/>
           <xs:element name="errorGroups" type="xs:string"/>
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="ErrorParameter">
-        <xs:sequence>
-          <xs:element name="name" type="xs:string"/>
-          <xs:element name="value" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="ErrorDetailV3">
